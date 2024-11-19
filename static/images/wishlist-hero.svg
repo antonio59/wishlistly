@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="500" height="400" viewBox="0 0 500 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Background -->
+    <rect width="500" height="400" fill="#F8F9FA"/>
+    
+    <!-- Gift box -->
+    <rect x="150" y="150" width="200" height="200" fill="#7952B3" rx="20"/>
+    <rect x="150" y="230" width="200" height="20" fill="#6741A3"/>
+    <rect x="240" y="150" width="20" height="200" fill="#6741A3"/>
+    
+    <!-- Ribbon -->
+    <path d="M250 100 L270 150 L250 140 L230 150 Z" fill="#FFD700"/>
+    
+    <!-- Stars -->
+    <path d="M100 100 L110 120 L130 110 L110 120 L120 140 L100 120 L80 140 L90 120 L70 110 L90 120 Z" fill="#FFD700"/>
+    <path d="M400 150 L410 170 L430 160 L410 170 L420 190 L400 170 L380 190 L390 170 L370 160 L390 170 Z" fill="#FFD700"/>
+    <path d="M150 300 L160 320 L180 310 L160 320 L170 340 L150 320 L130 340 L140 320 L120 310 L140 320 Z" fill="#FFD700"/>
+    
+    <!-- Sparkles -->
+    <circle cx="350" cy="100" r="5" fill="#FFD700"/>
+    <circle cx="380" cy="250" r="5" fill="#FFD700"/>
+    <circle cx="120" cy="200" r="5" fill="#FFD700"/>
+</svg>

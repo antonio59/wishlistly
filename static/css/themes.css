@@ -1,0 +1,605 @@
+/* Common theme styles */
+.themed-wishlist {
+    border-radius: 15px;
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+/* Birthday Themes */
+.theme-birthday-party {
+    background: linear-gradient(45deg, #FF69B4, #87CEEB);
+    background-image: url('/static/images/patterns/confetti.png');
+    color: white;
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+}
+
+.theme-princess {
+    background: linear-gradient(45deg, #FF69B4, #DDA0DD);
+    background-image: url('/static/images/patterns/castle.png');
+    color: white;
+    box-shadow: 0 4px 15px rgba(221, 160, 221, 0.3);
+}
+
+.theme-superhero {
+    background: linear-gradient(45deg, #FF0000, #0000FF);
+    background-image: url('/static/images/patterns/comic.png');
+    color: white;
+    box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+}
+
+/* Christmas Themes */
+.theme-christmas-classic {
+    background: linear-gradient(45deg, #006400, #FF0000);
+    background-image: url('/static/images/patterns/snowflakes.png');
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 100, 0, 0.3);
+}
+
+.theme-winter-wonderland {
+    background: linear-gradient(45deg, #ADD8E6, #FFFFFF);
+    background-image: url('/static/images/patterns/snowfall.png');
+    color: #006400;
+    box-shadow: 0 4px 15px rgba(173, 216, 230, 0.3);
+}
+
+.theme-gingerbread {
+    background: linear-gradient(45deg, #8B4513, #CD853F);
+    background-image: url('/static/images/patterns/gingerbread.png');
+    color: white;
+    box-shadow: 0 4px 15px rgba(139, 69, 19, 0.3);
+}
+
+/* Halloween Themes */
+.theme-halloween-spooky {
+    background: linear-gradient(45deg, #FF4500, #000000);
+    background-image: url('/static/images/patterns/spooky.png');
+    color: white;
+    box-shadow: 0 4px 15px rgba(255, 69, 0, 0.3);
+}
+
+.theme-witch {
+    background: linear-gradient(45deg, #663399, #32CD32);
+    background-image: url('/static/images/patterns/magic.png');
+    color: white;
+    box-shadow: 0 4px 15px rgba(102, 51, 153, 0.3);
+}
+
+/* Graduation Theme */
+.theme-graduation {
+    background: linear-gradient(45deg, #00008B, #FFD700);
+    background-image: url('/static/images/patterns/diploma.png');
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 139, 0.3);
+}
+
+/* Birthday specific styles */
+.birthday-info {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 10px 15px;
+    margin-top: 10px;
+    backdrop-filter: blur(5px);
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+    animation: glow 2s infinite alternate;
+}
+
+.birthday-icon {
+    font-size: 1.2em;
+    margin-right: 8px;
+    display: inline-block;
+    animation: bounce 2s infinite;
+}
+
+.birthday-age {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 2px 8px;
+    border-radius: 15px;
+    margin-left: 8px;
+    font-size: 0.9em;
+}
+
+.countdown {
+    margin-top: 5px;
+    color: rgba(255, 255, 255, 0.9);
+    font-style: italic;
+}
+
+@keyframes glow {
+    from {
+        box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+    }
+    to {
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+    }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+/* Theme animations */
+.themed-wishlist:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Theme icons */
+.theme-icon {
+    font-size: 1.5em;
+    margin: 0 5px;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+}
+
+/* Theme-specific buttons */
+.themed-wishlist .btn-theme {
+    border: none;
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.themed-wishlist .btn-theme:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Theme-specific cards */
+.themed-wishlist .card {
+    border: none;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Theme-specific text */
+.themed-wishlist .card-title {
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.themed-wishlist .card-text {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Theme styles for wishlists */
+
+/* Birthday Theme */
+.theme-birthday {
+    background: linear-gradient(135deg, #fff6f6, #fff0f9);
+}
+.theme-birthday .card-header {
+    background: linear-gradient(135deg, #ff6b88, #ff8e8e) !important;
+}
+.theme-birthday .btn-primary {
+    background-color: #ff6b88;
+    border-color: #ff6b88;
+}
+
+/* Christmas Theme */
+.theme-christmas {
+    background: linear-gradient(135deg, #fff0f0, #f0fff0);
+}
+.theme-christmas .card-header {
+    background: linear-gradient(135deg, #d42426, #1a472a) !important;
+}
+.theme-christmas .btn-primary {
+    background-color: #d42426;
+    border-color: #d42426;
+}
+
+/* Space Theme */
+.theme-space {
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    color: #fff;
+}
+.theme-space .card-header {
+    background: linear-gradient(135deg, #0f3460, #533483) !important;
+}
+.theme-space .btn-primary {
+    background-color: #533483;
+    border-color: #533483;
+}
+.theme-space .card {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Princess Theme */
+.theme-princess {
+    background: linear-gradient(135deg, #fff0f9, #fff6ff);
+}
+.theme-princess .card-header {
+    background: linear-gradient(135deg, #ff69b4, #da70d6) !important;
+}
+.theme-princess .btn-primary {
+    background-color: #ff69b4;
+    border-color: #ff69b4;
+}
+
+/* Superhero Theme */
+.theme-superhero {
+    background: linear-gradient(135deg, #f0f6ff, #fff0f0);
+}
+.theme-superhero .card-header {
+    background: linear-gradient(135deg, #dc0000, #0066cc) !important;
+}
+.theme-superhero .btn-primary {
+    background-color: #dc0000;
+    border-color: #dc0000;
+}
+
+/* Dinosaur Theme */
+.theme-dinosaur {
+    background: linear-gradient(135deg, #f4fff0, #f0fff6);
+}
+.theme-dinosaur .card-header {
+    background: linear-gradient(135deg, #2d5a27, #8b4513) !important;
+}
+.theme-dinosaur .btn-primary {
+    background-color: #2d5a27;
+    border-color: #2d5a27;
+}
+
+/* Unicorn Theme */
+.theme-unicorn {
+    background: linear-gradient(135deg, #fff0ff, #f0f0ff);
+}
+.theme-unicorn .card-header {
+    background: linear-gradient(135deg, #ff69b4, #9b59b6) !important;
+}
+.theme-unicorn .btn-primary {
+    background-color: #9b59b6;
+    border-color: #9b59b6;
+}
+
+/* Sports Theme */
+.theme-sports {
+    background: linear-gradient(135deg, #f0f6ff, #fff6f0);
+}
+.theme-sports .card-header {
+    background: linear-gradient(135deg, #0066cc, #ff6600) !important;
+}
+.theme-sports .btn-primary {
+    background-color: #0066cc;
+    border-color: #0066cc;
+}
+
+/* Ocean Theme */
+.theme-ocean {
+    background: linear-gradient(135deg, #e0f7ff, #f0ffff);
+}
+.theme-ocean .card-header {
+    background: linear-gradient(135deg, #006994, #00a0b0) !important;
+}
+.theme-ocean .btn-primary {
+    background-color: #006994;
+    border-color: #006994;
+}
+
+/* Gaming Theme */
+.theme-gaming {
+    background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+    color: #fff;
+}
+.theme-gaming .card-header {
+    background: linear-gradient(135deg, #6441a5, #2a0845) !important;
+}
+.theme-gaming .btn-primary {
+    background-color: #6441a5;
+    border-color: #6441a5;
+}
+.theme-gaming .card {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Common Theme Styles */
+[class*="theme-"] {
+    border-radius: 1rem;
+    transition: all 0.3s ease;
+}
+
+[class*="theme-"] .card-header {
+    color: #fff !important;
+    border-bottom: none;
+}
+
+[class*="theme-"] .btn-primary:hover {
+    filter: brightness(110%);
+}
+
+/* Theme Preview Styles */
+.theme-preview {
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.theme-preview:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* Base styles */
+:root {
+    --primary-color: #7952b3;
+    --secondary-color: #6c757d;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --info-color: #17a2b8;
+    --light-color: #f8f9fa;
+    --dark-color: #343a40;
+    --white: #ffffff;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Navigation */
+.navbar {
+    background-color: var(--white);
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-brand a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.nav-link {
+    color: var(--dark-color);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.nav-link:hover {
+    background-color: var(--light-color);
+}
+
+.nav-link i {
+    margin-right: 0.5rem;
+}
+
+/* Dropdown Menu */
+.dropdown {
+    position: relative;
+}
+
+.dropbtn {
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: var(--white);
+    min-width: 200px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    border-radius: 4px;
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-item {
+    color: var(--dark-color);
+    padding: 0.75rem 1rem;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.dropdown-item:hover {
+    background-color: var(--light-color);
+}
+
+.dropdown-divider {
+    height: 1px;
+    background-color: var(--light-color);
+    margin: 0.5rem 0;
+}
+
+.account-label {
+    font-size: 0.8rem;
+    color: var(--white);
+    opacity: 0.8;
+    margin-left: 0.5rem;
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    flex: 1;
+}
+
+/* Alerts */
+.alert {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.alert-warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+}
+
+.alert-info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+/* Footer */
+.footer {
+    background-color: var(--light-color);
+    padding: 2rem;
+    margin-top: auto;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.footer-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.footer-links a {
+    color: var(--secondary-color);
+    text-decoration: none;
+}
+
+.footer-links a:hover {
+    color: var(--primary-color);
+}
+
+.footer-copyright {
+    color: var(--secondary-color);
+    font-size: 0.9rem;
+}
+
+/* Forms */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+.btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.btn-primary:hover {
+    background-color: #643b9f;
+}
+
+/* Cards */
+.card {
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        padding: 1rem;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        width: 100%;
+        gap: 0.5rem;
+    }
+
+    .nav-link {
+        width: 100%;
+        text-align: center;
+    }
+
+    .dropdown {
+        width: 100%;
+    }
+
+    .dropbtn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .dropdown-content {
+        width: 100%;
+    }
+
+    .footer-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+}

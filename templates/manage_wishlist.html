@@ -1,0 +1,311 @@
+{% extends "base.html" %}
+
+{% block title %}Manage {{ wishlist.title }}{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>{{ wishlist.title }}</h1>
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#shareModal">
+                <i class="fas fa-share-alt"></i> Share
+            </button>
+            <a href="{{ url_for('edit_wishlist', wishlist_id=wishlist.id) }}" class="btn btn-outline-primary">
+                <i class="fas fa-edit"></i> Edit
+            </a>
+        </div>
+    </div>
+
+    {% if wishlist.description %}
+        <p class="lead text-muted mb-4">{{ wishlist.description }}</p>
+    {% endif %}
+
+    <div class="card mb-4">
+        <div class="card-header bg-light">
+            <h5 class="card-title mb-0">
+                <i class="fas fa-link"></i> Public Wishlist URL
+            </h5>
+        </div>
+        <div class="card-body">
+            <div class="input-group">
+                <input type="text" class="form-control" readonly 
+                       value="{{ url_for('public_wishlist', share_code=wishlist.share_code, _external=True) }}">
+                <button class="btn btn-outline-primary copy-link" type="button">
+                    <i class="fas fa-copy"></i> Copy
+                </button>
+                <a href="{{ url_for('public_wishlist', share_code=wishlist.share_code) }}" 
+                   class="btn btn-primary" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> View
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Wishlist Items</h2>
+        <a href="{{ url_for('add_wishlist_item', wishlist_id=wishlist.id) }}" class="btn btn-success">
+            <i class="fas fa-plus"></i> Add Item
+        </a>
+    </div>
+
+    {% set priority_order = ['HIGH', 'MEDIUM', 'LOW'] %}
+    {% for priority in priority_order %}
+        {% set items = wishlist.items|selectattr('priority.value', 'eq', priority)|list %}
+        {% if items %}
+            <div class="priority-section mb-5">
+                <div class="priority-header d-flex justify-content-between align-items-center">
+                    <h3 class="priority-title">
+                        {% if priority == 'HIGH' %}
+                            <i class="fas fa-star text-warning"></i> Must Have Items
+                        {% elif priority == 'MEDIUM' %}
+                            <i class="fas fa-heart text-info"></i> Would Love Items
+                        {% else %}
+                            <i class="fas fa-thumbs-up text-success"></i> Nice to Have Items
+                        {% endif %}
+                    </h3>
+                    <span class="badge bg-secondary">{{ items|length }} items</span>
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Description</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in items %}
+                                <tr>
+                                    <td>
+                                        {% if item.image_url %}
+                                            <img src="{{ url_for('static', filename='uploads/' + item.image_url.split(',')[0]) }}" 
+                                                 class="item-thumbnail me-2" alt="{{ item.name }}">
+                                        {% endif %}
+                                        {{ item.name }}
+                                    </td>
+                                    <td>{{ item.description|truncate(100) }}</td>
+                                    <td>
+                                        {% if item.purchased %}
+                                            <span class="badge bg-success">
+                                                <i class="fas fa-gift"></i> 
+                                                Claimed by {{ item.purchased_by }}
+                                            </span>
+                                        {% else %}
+                                            <span class="badge bg-secondary">Available</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a href="{{ url_for('edit_wishlist_item', item_id=item.id) }}" 
+                                               class="btn btn-sm btn-outline-primary">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <button type="button" class="btn btn-sm btn-outline-danger" 
+                                                    data-bs-toggle="modal" 
+                                                    data-bs-target="#deleteModal{{ item.id }}">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- Delete Modal -->
+                                <div class="modal fade" id="deleteModal{{ item.id }}" tabindex="-1">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Delete Item</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Are you sure you want to delete "{{ item.name }}"?</p>
+                                                {% if item.purchased %}
+                                                    <div class="alert alert-warning">
+                                                        <i class="fas fa-exclamation-triangle"></i>
+                                                        This item has been claimed by {{ item.purchased_by }}.
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                    Cancel
+                                                </button>
+                                                <form action="{{ url_for('delete_wishlist_item', item_id=item.id) }}" 
+                                                      method="POST" class="d-inline">
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+
+    {% if not wishlist.items %}
+        <div class="text-center py-5">
+            <div class="empty-state">
+                <i class="fas fa-gift fa-3x text-muted mb-3"></i>
+                <h3>No Items Yet</h3>
+                <p class="text-muted">Start adding items to your wishlist!</p>
+                <a href="{{ url_for('add_wishlist_item', wishlist_id=wishlist.id) }}" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Add First Item
+                </a>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+<!-- Share Modal -->
+<div class="modal fade" id="shareModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Share Wishlist</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">Public Wishlist URL</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" readonly 
+                               value="{{ url_for('public_wishlist', share_code=wishlist.share_code, _external=True) }}">
+                        <button class="btn btn-outline-primary copy-link" type="button">
+                            <i class="fas fa-copy"></i> Copy
+                        </button>
+                    </div>
+                    <small class="text-muted">Share this link with friends and family</small>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">Custom URL (Optional)</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="customUrl" 
+                               value="{{ wishlist.custom_share_url or '' }}"
+                               placeholder="Enter custom URL">
+                        <button class="btn btn-primary" id="saveCustomUrl" type="button">Save</button>
+                    </div>
+                    <small class="text-muted">Create a memorable URL for your wishlist</small>
+                </div>
+
+                <div class="share-buttons mt-4">
+                    <button class="btn btn-outline-primary me-2" onclick="shareViaEmail()">
+                        <i class="fas fa-envelope"></i> Email
+                    </button>
+                    <button class="btn btn-outline-primary me-2" onclick="shareViaWhatsApp()">
+                        <i class="fab fa-whatsapp"></i> WhatsApp
+                    </button>
+                    <button class="btn btn-outline-primary" onclick="shareViaSMS()">
+                        <i class="fas fa-sms"></i> SMS
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.priority-header {
+    border-bottom: 2px solid #eee;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+}
+
+.item-thumbnail {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.empty-state {
+    color: #6c757d;
+}
+
+.share-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.copy-link:focus {
+    outline: none;
+    box-shadow: none;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Copy link functionality
+    document.querySelectorAll('.copy-link').forEach(button => {
+        button.addEventListener('click', function() {
+            const input = this.previousElementSibling;
+            input.select();
+            document.execCommand('copy');
+            
+            // Show feedback
+            const originalText = this.innerHTML;
+            this.innerHTML = '<i class="fas fa-check"></i> Copied!';
+            setTimeout(() => {
+                this.innerHTML = originalText;
+            }, 2000);
+        });
+    });
+    
+    // Save custom URL
+    document.getElementById('saveCustomUrl').addEventListener('click', async function() {
+        const customUrl = document.getElementById('customUrl').value;
+        try {
+            const response = await fetch("{{ url_for('customize_share_url', wishlist_id=wishlist.id) }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ custom_url: customUrl })
+            });
+            
+            const data = await response.json();
+            if (data.success) {
+                alert('Custom URL saved successfully!');
+                location.reload();
+            } else {
+                alert(data.message);
+            }
+        } catch (error) {
+            alert('Error saving custom URL');
+        }
+    });
+});
+
+function shareViaEmail() {
+    const subject = encodeURIComponent("Check out my wishlist on Wishlistly!");
+    const body = encodeURIComponent(
+        "Hi!\n\nI've created a wishlist on Wishlistly. You can view it here:\n\n" +
+        "{{ url_for('public_wishlist', share_code=wishlist.share_code, _external=True) }}"
+    );
+    window.location.href = `mailto:?subject=${subject}&body=${body}`;
+}
+
+function shareViaWhatsApp() {
+    const text = encodeURIComponent(
+        "Check out my wishlist on Wishlistly!\n\n" +
+        "{{ url_for('public_wishlist', share_code=wishlist.share_code, _external=True) }}"
+    );
+    window.open(`https://wa.me/?text=${text}`);
+}
+
+function shareViaSMS() {
+    const text = encodeURIComponent(
+        "Check out my wishlist on Wishlistly!\n\n" +
+        "{{ url_for('public_wishlist', share_code=wishlist.share_code, _external=True) }}"
+    );
+    window.location.href = `sms:?&body=${text}`;
+}
+</script>
+{% endblock %}

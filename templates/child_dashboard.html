@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/child_dashboard.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="child-dashboard">
+    <!-- Welcome Section -->
+    <div class="welcome-section">
+        <div class="avatar-section">
+            <img src="{{ current_user.avatar_url or url_for('static', filename='images/default_avatar.png') }}" alt="Avatar">
+        </div>
+        <div class="welcome-text">
+            <h1>Welcome Back, {{ current_user.username }}! 🌟</h1>
+            <p>Let's Build Your Wishlist!</p>
+        </div>
+    </div>
+
+    <!-- Progress Summary -->
+    <div class="progress-summary">
+        <p>You have {{ wishlists|length }} wishlist{% if wishlists|length != 1 %}s{% endif %} with {{ total_items }} items total. 🎁</p>
+        {% if purchased_items %}
+            <p>{{ purchased_items }} items have already been purchased! 🎉</p>
+        {% endif %}
+    </div>
+
+    <!-- Create Wishlist Button -->
+    {% if not wishlists %}
+        <button id="createWishlistBtn" class="create-wishlist-btn">Create My First Wishlist! 🎉</button>
+    {% else %}
+        <button id="createWishlistBtn" class="create-wishlist-btn">Create New Wishlist ✨</button>
+    {% endif %}
+
+    <!-- Wishlist Cards -->
+    <div class="wishlist-cards">
+        {% for wishlist in wishlists %}
+        <div class="wishlist-card" data-wishlist-id="{{ wishlist.id }}">
+            <h3>{{ wishlist.title }} {% if wishlist.theme_icon %}{{ wishlist.theme_icon }}{% endif %}</h3>
+            <p>{{ wishlist.items|length }} items</p>
+            <div class="progress-bar">
+                <div class="progress-bar-fill" data-progress="{{ (wishlist.purchased_items / wishlist.items|length * 100) if wishlist.items else 0 }}"></div>
+            </div>
+            <div class="card-actions">
+                <button class="view-btn">View Wishlist</button>
+                <button class="edit-btn">Edit Wishlist</button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Achievements Section -->
+    <div class="achievements-section">
+        <h2>Your Achievements 🏆</h2>
+        <div class="achievement-badges">
+            {% if has_first_wishlist %}
+            <div class="badge">
+                <div class="badge-icon">🎉</div>
+                <p>First Wishlist Created!</p>
+            </div>
+            {% endif %}
+            {% if total_items >= 5 %}
+            <div class="badge">
+                <div class="badge-icon">🏆</div>
+                <p>Added 5 Items!</p>
+            </div>
+            {% endif %}
+            {% if wishlists|length >= 3 %}
+            <div class="badge">
+                <div class="badge-icon">⭐</div>
+                <p>Wishlist Master!</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Activity Feed -->
+    <div class="activity-feed">
+        <h2>Recent Activity 📝</h2>
+        {% for activity in activities %}
+        <div class="activity-item">
+            {{ activity.message }} {{ activity.emoji }}
+            <small>{{ activity.timestamp.strftime('%B %d, %Y') }}</small>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Customize Button -->
+    <button id="customizeBtn" class="customize-btn">🎨</button>
+
+    <!-- Wishlist Creation Wizard Modal -->
+    <div id="wishlistWizard" class="modal">
+        <div class="modal-content">
+            <form id="wishlistForm">
+                <div class="wizard-step active">
+                    <h2>Step 1: Name Your Wishlist ✏️</h2>
+                    <input type="text" name="title" required placeholder="My Awesome Wishlist">
+                    <div class="wizard-navigation">
+                        <button type="button" class="wizard-next">Next →</button>
+                    </div>
+                </div>
+
+                <div class="wizard-step">
+                    <h2>Step 2: Choose a Theme 🎨</h2>
+                    <div class="theme-options">
+                        <div class="theme-option" data-theme="birthday">🎂</div>
+                        <div class="theme-option" data-theme="christmas">🎄</div>
+                        <div class="theme-option" data-theme="space">🚀</div>
+                        <div class="theme-option" data-theme="animals">🐼</div>
+                        <div class="theme-option" data-theme="fantasy">🦄</div>
+                        <div class="theme-option" data-theme="sports">⚽</div>
+                    </div>
+                    <div class="wizard-navigation">
+                        <button type="button" class="wizard-prev">← Back</button>
+                        <button type="button" class="wizard-next">Next →</button>
+                    </div>
+                </div>
+
+                <div class="wizard-step">
+                    <h2>Step 3: Add Your First Item 🎁</h2>
+                    <input type="text" name="first_item" required placeholder="What's your first wish?">
+                    <textarea name="item_description" placeholder="Tell us more about it..."></textarea>
+                    <div class="wizard-navigation">
+                        <button type="button" class="wizard-prev">← Back</button>
+                        <button type="submit">Create Wishlist ✨</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Customize Modal -->
+    <div id="customizeModal" class="modal">
+        <div class="modal-content">
+            <h2>Customize Your Dashboard 🎨</h2>
+            <div class="theme-options">
+                <div class="theme-option" data-theme="default">🌈</div>
+                <div class="theme-option" data-theme="space">🚀</div>
+                <div class="theme-option" data-theme="ocean">🌊</div>
+                <div class="theme-option" data-theme="forest">🌲</div>
+                <div class="theme-option" data-theme="candy">🍭</div>
+                <div class="theme-option" data-theme="rainbow">🌈</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/child_dashboard.js') }}"></script>
+{% endblock %}

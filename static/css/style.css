@@ -1,0 +1,182 @@
+/* Global Styles */
+body {
+    font-family: 'Comic Neue', cursive;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+/* Navbar Styles */
+.navbar {
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 1rem 0;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #FF6B6B;
+}
+
+.nav-link {
+    color: #666;
+    font-weight: bold;
+    margin: 0 0.5rem;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #FF6B6B;
+}
+
+/* Card Styles */
+.wishlist-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+
+.wishlist-card:hover {
+    transform: translateY(-5px);
+}
+
+.wishlist-card .card-header {
+    background: linear-gradient(135deg, #FF6B6B 0%, #FF8E8E 100%);
+    color: white;
+    padding: 1rem;
+    font-weight: bold;
+}
+
+/* Form Styles */
+.form-control {
+    border-radius: 10px;
+    border: 2px solid #e9ecef;
+    padding: 0.8rem;
+    font-size: 1rem;
+}
+
+.form-control:focus {
+    border-color: #FF6B6B;
+    box-shadow: 0 0 0 0.2rem rgba(255,107,107,0.25);
+}
+
+/* Button Styles */
+.btn {
+    border-radius: 25px;
+    padding: 0.5rem 1.5rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+/* Theme Colors */
+.theme-birthday {
+    background: linear-gradient(135deg, #FF6B6B 0%, #FF8E8E 100%);
+}
+
+.theme-christmas {
+    background: linear-gradient(135deg, #2ECC71 0%, #27AE60 100%);
+}
+
+.theme-halloween {
+    background: linear-gradient(135deg, #F39C12 0%, #D35400 100%);
+}
+
+/* Wishlist Item Styles */
+.wishlist-item {
+    background: white;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 2px solid #e9ecef;
+    transition: all 0.3s ease;
+}
+
+.wishlist-item:hover {
+    border-color: #FF6B6B;
+    transform: translateX(5px);
+}
+
+.wishlist-item.purchased {
+    opacity: 0.7;
+    background-color: #f8f9fa;
+}
+
+.wishlist-item.purchased .item-name {
+    text-decoration: line-through;
+}
+
+/* Share Button Styles */
+.share-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 0.5rem 1.5rem;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+}
+
+.share-button:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+}
+
+/* Footer Styles */
+.footer {
+    background-color: #fff;
+    padding: 2rem 0;
+    margin-top: 3rem;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+}
+
+/* Animations */
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+.floating {
+    animation: float 3s ease-in-out infinite;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .cta-buttons .btn {
+        display: block;
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+}
+
+/* Accessibility */
+:focus {
+    outline: 3px solid #FF6B6B;
+    outline-offset: 2px;
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    body {
+        background: white;
+        color: black;
+    }
+    
+    .btn-primary {
+        background: black;
+        color: white;
+        border: 2px solid black;
+    }
+}

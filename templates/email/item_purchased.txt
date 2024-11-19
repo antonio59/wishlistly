@@ -1,0 +1,8 @@
+Great news! {{ purchaser_name }} has purchased {{ item_name }} from your wishlist "{{ wishlist_title }}"!
+
+This item will be marked as purchased on your wishlist to prevent duplicate purchases.
+
+Remember to thank {{ purchaser_name }} when you receive your gift!
+
+Kids Wishlist - Making Gift-Giving Fun and Easy!
+This is an automated message, please do not reply.

@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}About Wishlistly{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h1 class="text-center mb-4">About Wishlistly</h1>
+                    
+                    <div class="mb-5">
+                        <h2 class="h4">What is Wishlistly?</h2>
+                        <p>Wishlistly is a modern wishlist platform designed to make gift-giving more meaningful and organized. Our platform helps children create and share their wishlists while giving parents and loved ones an easy way to coordinate gifts.</p>
+                    </div>
+
+                    <div class="mb-5">
+                        <h2 class="h4">Our Mission</h2>
+                        <p>We believe in making special occasions truly special. Our mission is to create a safe, fun, and easy-to-use platform where children can express their wishes and adults can fulfill them with confidence.</p>
+                    </div>
+
+                    <div class="mb-5">
+                        <h2 class="h4">Key Features</h2>
+                        <ul class="list-unstyled">
+                            <li class="mb-3">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                <strong>Priority Levels:</strong> Organize wishes by importance (Must Have, Would Love, Nice to Have)
+                            </li>
+                            <li class="mb-3">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                <strong>Beautiful Themes:</strong> Personalize wishlists with fun, seasonal themes
+                            </li>
+                            <li class="mb-3">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                <strong>Safe Sharing:</strong> Share wishlists securely with family and friends
+                            </li>
+                            <li class="mb-3">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                <strong>Gift Coordination:</strong> Prevent duplicate gifts with our purchase tracking
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="mb-5">
+                        <h2 class="h4">For Parents</h2>
+                        <p>Wishlistly provides tools to help parents:</p>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="fas fa-shield-alt text-primary me-2"></i>Monitor and approve children's wishlists</li>
+                            <li class="mb-2"><i class="fas fa-share-alt text-primary me-2"></i>Share wishlists with family and friends</li>
+                            <li class="mb-2"><i class="fas fa-gift text-primary me-2"></i>Track purchased items</li>
+                            <li class="mb-2"><i class="fas fa-bell text-primary me-2"></i>Receive notifications about wishlist activities</li>
+                        </ul>
+                    </div>
+
+                    <div class="mb-5">
+                        <h2 class="h4">For Children</h2>
+                        <p>Children can:</p>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="fas fa-paint-brush text-success me-2"></i>Create beautiful wishlists with fun themes</li>
+                            <li class="mb-2"><i class="fas fa-store text-success me-2"></i>Add items from their favorite stores</li>
+                            <li class="mb-2"><i class="fas fa-star text-success me-2"></i>Organize wishes by importance</li>
+                            <li class="mb-2"><i class="fas fa-heart text-success me-2"></i>Share their lists with family</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h2 class="h4">Get Started</h2>
+                        <p>Ready to start creating wishlists? Check out our guides:</p>
+                        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                            <a href="{{ url_for('main.parent_guide') }}" class="btn btn-primary">
+                                <i class="fas fa-user-shield me-2"></i>Parent's Guide
+                            </a>
+                            <a href="{{ url_for('main.child_guide') }}" class="btn btn-success">
+                                <i class="fas fa-child me-2"></i>Kid's Guide
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

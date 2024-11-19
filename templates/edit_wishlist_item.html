@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Wishlist Item{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">Edit Item in {{ wishlist.title }}</h2>
+                </div>
+                <div class="card-body">
+                    <form method="POST" class="needs-validation" novalidate>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Item Name*</label>
+                            <input type="text" class="form-control" id="name" name="name" 
+                                   value="{{ item.name }}" required>
+                            <div class="invalid-feedback">
+                                Please provide an item name.
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" name="description" 
+                                      rows="3">{{ item.description }}</textarea>
+                            <div class="form-text">Add any details about the item that might be helpful.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="url" class="form-label">Link to Item</label>
+                            <input type="text" class="form-control" id="url" name="url" 
+                                   value="{{ item.url }}" 
+                                   placeholder="www.example.com/item or https://example.com/item">
+                            <div class="form-text">Add a link where this item can be found. You can start with www. or https://</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="priority" class="form-label">Priority Level</label>
+                            <select class="form-select" id="priority" name="priority">
+                                <option value="MUST_HAVE" {% if item.priority.value == 'MUST_HAVE' %}selected{% endif %}>
+                                    Must Have
+                                </option>
+                                <option value="WOULD_LOVE" {% if item.priority.value == 'WOULD_LOVE' %}selected{% endif %}>
+                                    Would Love
+                                </option>
+                                <option value="NICE_TO_HAVE" {% if item.priority.value == 'NICE_TO_HAVE' %}selected{% endif %}>
+                                    Nice to Have
+                                </option>
+                            </select>
+                            <div class="form-text">Select how much you want this item.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="notes" class="form-label">Additional Notes</label>
+                            <textarea class="form-control" id="notes" name="notes" 
+                                      rows="2">{{ item.notes }}</textarea>
+                            <div class="form-text">Add any additional notes (size, color preferences, etc.)</div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i>Save Changes
+                            </button>
+                            <a href="{{ url_for('manage_wishlist', wishlist_id=wishlist.id) }}" 
+                               class="btn btn-outline-secondary">
+                               <i class="fas fa-times me-2"></i>Cancel
+                            </a>
+                        </div>
+                    </form>
+
+                    <hr class="my-4">
+
+                    <form method="POST" action="{{ url_for('delete_wishlist_item', item_id=item.id) }}" 
+                          onsubmit="return confirm('Are you sure you want to delete this item? This cannot be undone.');">
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fas fa-trash-alt me-2"></i>Delete Item
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block scripts %}
+<script>
+// Form validation
+(function () {
+    'use strict'
+    var forms = document.querySelectorAll('.needs-validation')
+    Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+                form.classList.add('was-validated')
+            }, false)
+        })
+})()
+
+// URL input handling
+document.getElementById('url').addEventListener('blur', function(e) {
+    let url = e.target.value.trim();
+    if (url && !url.startsWith('http://') && !url.startsWith('https://')) {
+        if (url.startsWith('www.')) {
+            url = 'https://' + url;
+        } else {
+            url = 'https://www.' + url;
+        }
+        e.target.value = url;
+    }
+});
+</script>
+{% endblock %}
+{% endblock %}

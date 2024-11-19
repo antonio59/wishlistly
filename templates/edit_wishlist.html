@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Wishlist{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">Edit Wishlist</h2>
+                </div>
+                <div class="card-body">
+                    <form method="POST" class="needs-validation" novalidate>
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Wishlist Title</label>
+                            <input type="text" class="form-control" id="title" name="title" 
+                                   value="{{ wishlist.title }}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="occasion" class="form-label">Occasion</label>
+                            <select class="form-select" id="occasion" name="occasion" required>
+                                <option value="Birthday" {% if wishlist.occasion == 'Birthday' %}selected{% endif %}>Birthday</option>
+                                <option value="Christmas" {% if wishlist.occasion == 'Christmas' %}selected{% endif %}>Christmas</option>
+                                <option value="Graduation" {% if wishlist.occasion == 'Graduation' %}selected{% endif %}>Graduation</option>
+                                <option value="Other" {% if wishlist.occasion == 'Other' %}selected{% endif %}>Other</option>
+                            </select>
+                        </div>
+
+                        <div id="birthday-details" class="mb-3 {% if wishlist.occasion != 'Birthday' %}d-none{% endif %}">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="birthday_date" class="form-label">Birthday Date</label>
+                                    <input type="date" class="form-control" id="birthday_date" name="birthday_date"
+                                           value="{{ wishlist.birthday_date.strftime('%Y-%m-%d') if wishlist.birthday_date }}">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="turning_age" class="form-label">Turning Age</label>
+                                    <input type="number" class="form-control" id="turning_age" name="turning_age"
+                                           value="{{ wishlist.turning_age if wishlist.turning_age }}" min="1" max="18">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="theme" class="form-label">Theme</label>
+                            <select class="form-select" id="theme" name="theme" required>
+                                <option value="birthday" {% if wishlist.theme == 'birthday' %}selected{% endif %}>Birthday</option>
+                                <option value="christmas" {% if wishlist.theme == 'christmas' %}selected{% endif %}>Christmas</option>
+                                <option value="space" {% if wishlist.theme == 'space' %}selected{% endif %}>Space</option>
+                                <option value="princess" {% if wishlist.theme == 'princess' %}selected{% endif %}>Princess</option>
+                                <option value="superhero" {% if wishlist.theme == 'superhero' %}selected{% endif %}>Superhero</option>
+                                <option value="dinosaur" {% if wishlist.theme == 'dinosaur' %}selected{% endif %}>Dinosaur</option>
+                                <option value="unicorn" {% if wishlist.theme == 'unicorn' %}selected{% endif %}>Unicorn</option>
+                                <option value="sports" {% if wishlist.theme == 'sports' %}selected{% endif %}>Sports</option>
+                                <option value="ocean" {% if wishlist.theme == 'ocean' %}selected{% endif %}>Ocean</option>
+                                <option value="gaming" {% if wishlist.theme == 'gaming' %}selected{% endif %}>Gaming</option>
+                            </select>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ url_for('view_wishlist', wishlist_id=wishlist.id) }}" class="btn btn-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const occasionSelect = document.getElementById('occasion');
+    const birthdayDetails = document.getElementById('birthday-details');
+
+    occasionSelect.addEventListener('change', function() {
+        if (this.value === 'Birthday') {
+            birthdayDetails.classList.remove('d-none');
+        } else {
+            birthdayDetails.classList.add('d-none');
+        }
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,169 @@
+/* Theme Base Styles */
+.theme-background {
+    position: relative;
+    min-height: 100vh;
+    padding: 2rem 0;
+}
+
+.theme-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    opacity: 0.15;
+}
+
+.theme-content {
+    position: relative;
+    z-index: 1;
+}
+
+/* Birthday Themes */
+.theme-birthday-classic {
+    background: linear-gradient(135deg, #ff69b4, #ff1493);
+}
+
+.theme-birthday-rainbow {
+    background: linear-gradient(to right, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8f00ff);
+}
+
+.theme-birthday-sparkle {
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+}
+
+.theme-birthday-unicorn {
+    background: linear-gradient(135deg, #FF69B4, #9370DB);
+}
+
+.theme-birthday-galaxy {
+    background: linear-gradient(135deg, #000033, #191970);
+    color: white;
+}
+
+.theme-birthday-princess {
+    background: linear-gradient(135deg, #FFB6C1, #DDA0DD);
+}
+
+/* Christmas Themes */
+.theme-christmas-classic {
+    background: linear-gradient(135deg, #006400, #228B22);
+    color: white;
+}
+
+.theme-christmas-cozy {
+    background: linear-gradient(135deg, #8B4513, #A0522D);
+    color: white;
+}
+
+.theme-christmas-modern {
+    background: linear-gradient(135deg, #2F4F4F, #696969);
+    color: white;
+}
+
+/* Graduation Themes */
+.theme-graduation-classic {
+    background: linear-gradient(135deg, #000000, #2F4F4F);
+    color: white;
+}
+
+.theme-graduation-modern {
+    background: linear-gradient(135deg, #4169E1, #000080);
+    color: white;
+}
+
+/* Theme Decorations */
+.theme-decorations {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+}
+
+/* Sparkles Animation */
+@keyframes sparkle {
+    0% { transform: scale(0) rotate(0deg); opacity: 0; }
+    50% { transform: scale(1) rotate(180deg); opacity: 1; }
+    100% { transform: scale(0) rotate(360deg); opacity: 0; }
+}
+
+.sparkles i {
+    position: absolute;
+    animation: sparkle 2s infinite;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Snowflakes Animation */
+@keyframes snow {
+    0% { transform: translateY(-100%) rotate(0deg); }
+    100% { transform: translateY(100vh) rotate(360deg); }
+}
+
+.snowflakes i {
+    position: absolute;
+    animation: snow 5s linear infinite;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Card Styles */
+.card {
+    background: rgba(255, 255, 255, 0.95);
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.card.bought {
+    background: rgba(245, 245, 245, 0.95);
+}
+
+/* Priority Headings */
+.priority-heading {
+    color: inherit;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+}
+
+.priority-must_have i {
+    color: #FFD700;
+}
+
+.priority-would_love i {
+    color: #FF69B4;
+}
+
+.priority-nice_to_have i {
+    color: #87CEEB;
+}
+
+/* Theme Icons */
+.theme-icon-container {
+    background: rgba(255, 255, 255, 0.1);
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    backdrop-filter: blur(5px);
+}
+
+.theme-icon {
+    color: rgba(255, 255, 255, 0.9);
+}

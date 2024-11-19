@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% block title %}{{ wishlist.title }} - Shared Wishlist{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card theme-{{ wishlist.theme }}">
+                <div class="card-header">
+                    <div class="text-center">
+                        <h1 class="display-5 mb-2">{{ wishlist.title }}</h1>
+                        <div class="occasion-badge mb-3">{{ wishlist.occasion }}</div>
+                        {% if wishlist.occasion == 'Birthday' and wishlist.birthday_date %}
+                            <div class="birthday-info">
+                                <p class="lead">
+                                    🎂 Turning {{ wishlist.turning_age }} on 
+                                    {{ wishlist.birthday_date.strftime('%B %d, %Y') }}
+                                </p>
+                            </div>
+                        {% endif %}
+                        <p class="text-muted">Created by {{ wishlist.owner.username }}</p>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="items-container">
+                        {% if wishlist.items %}
+                            {% for item in wishlist.items %}
+                                <div class="item-card {% if item.purchased %}purchased{% endif %}">
+                                    <div class="item-info">
+                                        <h3 class="item-name">{{ item.name }}</h3>
+                                        {% if item.description %}
+                                            <p class="item-description">{{ item.description }}</p>
+                                        {% endif %}
+                                        {% if item.price %}
+                                            <div class="item-price">${{ "%.2f"|format(item.price) }}</div>
+                                        {% endif %}
+                                        {% if item.url %}
+                                            <a href="{{ item.url }}" target="_blank" class="btn btn-sm btn-outline-primary mt-2">
+                                                <i class="fas fa-external-link-alt"></i> View Item
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                    <div class="item-status">
+                                        {% if item.purchased %}
+                                            <span class="badge bg-success">
+                                                <i class="fas fa-check"></i> Purchased
+                                            </span>
+                                        {% else %}
+                                            <span class="badge bg-info">Available</span>
+                                        {% endif %}
+                                        {% if item.priority %}
+                                            <div class="priority-indicator mt-2">
+                                                Priority: 
+                                                {% for i in range(item.priority) %}
+                                                    ⭐
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="text-center py-5">
+                                <h3>No items in this wishlist yet!</h3>
+                                <p class="text-muted">Check back later for updates.</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.occasion-badge {
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    background-color: #6c63ff;
+    color: white;
+    border-radius: 25px;
+    font-size: 1rem;
+}
+
+.birthday-info {
+    margin: 1rem 0;
+    padding: 1rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+}
+
+.item-card {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    transition: transform 0.2s;
+}
+
+.item-card:hover {
+    transform: translateY(-2px);
+}
+
+.item-card.purchased {
+    background-color: #f8f9fa;
+    opacity: 0.8;
+}
+
+.item-info {
+    flex: 1;
+}
+
+.item-name {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: #2c3e50;
+}
+
+.item-description {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.item-price {
+    font-weight: bold;
+    color: #28a745;
+    font-size: 1.1rem;
+}
+
+.item-status {
+    margin-left: 1rem;
+    text-align: right;
+}
+
+.priority-indicator {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.badge {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+}
+</style>
+{% endblock %}

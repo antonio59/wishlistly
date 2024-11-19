@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+
+{% block title %}{{ wishlist.title }}{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/theme-styles.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="theme-background theme-{{ wishlist.theme|default('default') }}">
+    <div class="theme-overlay"></div>
+    <div class="container py-5 theme-content">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="wishlist-header text-center mb-5">
+                    {% if theme and theme.icon %}
+                        <div class="theme-icon-container mb-4">
+                            <i class="theme-icon fas {{ theme.icon }} fa-4x"></i>
+                        </div>
+                    {% endif %}
+                    <h1 class="display-4 mb-3">{{ wishlist.title }}</h1>
+                    {% if wishlist.description %}
+                        <p class="lead">{{ wishlist.description }}</p>
+                    {% endif %}
+                    
+                    {% if theme %}
+                        <div class="theme-decorations">
+                            {% if theme.decorations %}
+                                {% for decoration in theme.decorations %}
+                                    <div class="{{ decoration }}">
+                                        {% for i in range(5) %}
+                                            <i class="fas 
+                                                {%- if decoration == 'sparkles' -%}
+                                                    fa-star
+                                                {%- elif decoration == 'snowflakes' -%}
+                                                    fa-snowflake
+                                                {%- elif decoration == 'balloons' -%}
+                                                    fa-balloon
+                                                {%- elif decoration == 'stars' -%}
+                                                    fa-star
+                                                {%- else -%}
+                                                    fa-circle
+                                                {%- endif -%}"
+                                                style="left: {{ range(0, 100)|random }}%; top: {{ range(0, 100)|random }}%;">
+                                            </i>
+                                        {% endfor %}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="wishlist-content">
+                    <div class="priority-section">
+                        {% for priority, items in wishlist_items.items() %}
+                            {% if items %}
+                                <h3 class="mb-4 priority-heading priority-{{ priority|lower }}">
+                                    <i class="fas 
+                                        {% if priority == 'MUST_HAVE' %}fa-star text-warning
+                                        {% elif priority == 'WOULD_LOVE' %}fa-heart text-info
+                                        {% else %}fa-gift text-muted{% endif %} me-2"></i>
+                                    {% if priority == 'MUST_HAVE' %}Must Have Items
+                                    {% elif priority == 'WOULD_LOVE' %}Would Love Items
+                                    {% else %}Nice to Have Items{% endif %}
+                                </h3>
+                                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-5">
+                                    {% for item in items %}
+                                        <div class="col">
+                                            <div class="card h-100 {% if item.purchased %}bought{% endif %}">
+                                                {% if item.image_url %}
+                                                    <img src="{{ item.image_url }}" class="card-img-top" alt="{{ item.name }}">
+                                                {% endif %}
+                                                <div class="card-body">
+                                                    <h5 class="card-title">{{ item.name }}</h5>
+                                                    {% if item.description %}
+                                                        <p class="card-text">{{ item.description }}</p>
+                                                    {% endif %}
+                                                    {% if item.url %}
+                                                        <a href="{{ item.normalized_url }}" class="btn btn-primary" 
+                                                           target="_blank" rel="noopener noreferrer">
+                                                            <i class="fas fa-external-link-alt me-2"></i>View Item
+                                                        </a>
+                                                    {% endif %}
+                                                    {% if not item.purchased %}
+                                                        <button class="btn btn-success mt-2 mark-as-bought" 
+                                                                data-item-id="{{ item.id }}"
+                                                                onclick="markAsBought(this)">
+                                                            <i class="fas fa-check me-2"></i>Mark as Bought
+                                                        </button>
+                                                    {% else %}
+                                                        <div class="bought-status mt-2">
+                                                            <i class="fas fa-check-circle text-success me-2"></i>
+                                                            Bought by {{ item.purchased_by }}
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block scripts %}
+<script>
+function markAsBought(button) {
+    const itemId = button.dataset.itemId;
+    const buyerName = prompt('Please enter your name:');
+    
+    if (!buyerName) return;
+    
+    fetch(`/api/mark_as_bought/${itemId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            buyer_name: buyerName
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            const card = button.closest('.card');
+            card.classList.add('bought');
+            const cardBody = button.closest('.card-body');
+            button.remove();
+            const boughtStatus = document.createElement('div');
+            boughtStatus.className = 'bought-status mt-2';
+            boughtStatus.innerHTML = `
+                <i class="fas fa-check-circle text-success me-2"></i>
+                Bought by ${buyerName}
+            `;
+            cardBody.appendChild(boughtStatus);
+        } else {
+            alert('Error marking item as bought. Please try again.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error marking item as bought. Please try again.');
+    });
+}
+</script>
+{% endblock %}

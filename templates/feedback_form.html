@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block title %}Report Bug or Request Feature{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">Report Bug or Request Feature</h2>
+                </div>
+                <div class="card-body">
+                    <form method="POST" class="needs-validation" novalidate>
+                        <div class="mb-3">
+                            <label for="type" class="form-label">Type*</label>
+                            <select class="form-select" id="type" name="type" required>
+                                <option value="">Select type...</option>
+                                {% for type in feedback_types %}
+                                <option value="{{ type.value }}" {% if type.value == feedback_type %}selected{% endif %}>
+                                    {{ type.value.replace('_', ' ').title() }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                            <div class="invalid-feedback">
+                                Please select a type.
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Title*</label>
+                            <input type="text" class="form-control" id="title" name="title" 
+                                   placeholder="Brief description of the issue or feature" required>
+                            <div class="invalid-feedback">
+                                Please provide a title.
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description*</label>
+                            <textarea class="form-control" id="description" name="description" 
+                                    rows="5" required></textarea>
+                            <div class="form-text" id="descriptionHelp"></div>
+                            <div class="invalid-feedback">
+                                Please provide a description.
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="url" class="form-label">Related Page URL (optional)</label>
+                            <input type="url" class="form-control" id="url" name="url" 
+                                   placeholder="https://wishlistly.com/page-with-issue">
+                            <div class="form-text">If applicable, the page where you encountered the issue.</div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane me-2"></i>Submit Report
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function() {
+    'use strict'
+    
+    // Form validation
+    var forms = document.querySelectorAll('.needs-validation')
+    Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+            if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
+            form.classList.add('was-validated')
+        }, false)
+    })
+
+    // Dynamic help text based on type
+    const typeSelect = document.getElementById('type')
+    const descriptionHelp = document.getElementById('descriptionHelp')
+    
+    typeSelect.addEventListener('change', function() {
+        if (this.value === 'BUG') {
+            descriptionHelp.innerHTML = `
+                Please include:
+                <ul>
+                    <li>What you were trying to do</li>
+                    <li>What actually happened</li>
+                    <li>Steps to reproduce the issue</li>
+                    <li>Any error messages you saw</li>
+                </ul>
+            `
+        } else if (this.value === 'FEATURE') {
+            descriptionHelp.innerHTML = `
+                Please include:
+                <ul>
+                    <li>What problem this feature would solve</li>
+                    <li>How you envision it working</li>
+                    <li>Who would benefit from this feature</li>
+                </ul>
+            `
+        } else {
+            descriptionHelp.innerHTML = `
+                Please provide as much detail as possible to help us understand your feedback.
+            `
+        }
+    })
+
+    // Trigger initial help text
+    typeSelect.dispatchEvent(new Event('change'))
+})()
+</script>
+{% endblock %}

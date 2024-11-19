@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% block title %}Register Child Account{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h2 class="h4 mb-0">
+                <i class="fas fa-child me-2"></i>
+                Register Child Account
+            </h2>
+        </div>
+        <div class="card-body">
+            <div class="mb-4">
+                <h3 class="h5 mb-3">Choose Account Type</h3>
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="radio" name="account_type" id="parent_managed" value="parent_managed" checked>
+                    <label class="form-check-label" for="parent_managed">
+                        <i class="fas fa-user-shield me-2"></i>
+                        Parent-Managed Account
+                        <small class="d-block text-muted mt-1">
+                            Best for younger children. You'll manage the account through your parent dashboard.
+                            No separate login needed for the child.
+                        </small>
+                    </label>
+                </div>
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="radio" name="account_type" id="child_managed" value="child_managed">
+                    <label class="form-check-label" for="child_managed">
+                        <i class="fas fa-user-graduate me-2"></i>
+                        Child-Managed Account
+                        <small class="d-block text-muted mt-1">
+                            For older children who can manage their own account.
+                            Includes separate login credentials with parental oversight.
+                        </small>
+                    </label>
+                </div>
+            </div>
+
+            <form method="POST">
+                <input type="hidden" name="account_type" id="selected_account_type" value="parent_managed">
+                
+                <div class="mb-3">
+                    <label for="child_name" class="form-label">Child's Name</label>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="fas fa-user"></i>
+                        </span>
+                        <input type="text" class="form-control" id="child_name" name="child_name" required>
+                    </div>
+                    <div class="form-text">This will only be visible to you.</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="username" class="form-label">Display Name</label>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="fas fa-user-tag"></i>
+                        </span>
+                        <input type="text" class="form-control" id="username" name="username" required
+                               pattern="[A-Za-z0-9_]{3,}"
+                               title="Username must be at least 3 characters long and can only contain letters, numbers, and underscores">
+                    </div>
+                    <div class="form-text">This will be shown on wishlists. Don't use their real name!</div>
+                </div>
+
+                <div id="login_credentials" class="d-none">
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="fas fa-lock"></i>
+                            </span>
+                            <input type="password" class="form-control" id="password" name="password" minlength="6">
+                        </div>
+                        <div class="form-text">Choose a secure password that's at least 6 characters long.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="confirm_password" class="form-label">Confirm Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="fas fa-lock"></i>
+                            </span>
+                            <input type="password" class="form-control" id="confirm_password" name="confirm_password">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Your email address ({{ current_user.email }}) will be used for this child account.
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-user-plus me-2"></i>
+                        Register Child Account
+                    </button>
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left me-2"></i>
+                        Back to Dashboard
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const accountTypeInput = document.getElementById('selected_account_type');
+    const loginCredentials = document.getElementById('login_credentials');
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('confirm_password');
+
+    document.querySelectorAll('input[name="account_type"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            accountTypeInput.value = this.value;
+            if (this.value === 'child_managed') {
+                loginCredentials.classList.remove('d-none');
+                passwordInput.required = true;
+                confirmPasswordInput.required = true;
+            } else {
+                loginCredentials.classList.add('d-none');
+                passwordInput.required = false;
+                confirmPasswordInput.required = false;
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

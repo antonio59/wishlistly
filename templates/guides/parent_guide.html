@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block title %}Parent's Guide - Wishlistly{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h1 class="text-center mb-4">Parent's Guide to Wishlistly</h1>
+                    
+                    <div class="mb-5">
+                        <h2 class="h4"><i class="fas fa-rocket text-primary me-2"></i>Getting Started</h2>
+                        <ol class="list-unstyled">
+                            <li class="mb-3">
+                                <span class="badge bg-primary me-2">1</span>
+                                Create your parent account
+                            </li>
+                            <li class="mb-3">
+                                <span class="badge bg-primary me-2">2</span>
+                                Add your children's accounts
+                            </li>
+                            <li class="mb-3">
+                                <span class="badge bg-primary me-2">3</span>
+                                Help them create their first wishlist
+                            </li>
+                            <li class="mb-3">
+                                <span class="badge bg-primary me-2">4</span>
+                                Share wishlists with family and friends
+                            </li>
+                        </ol>
+                    </div>
+
+                    <div class="mb-5">
+                        <h2 class="h4"><i class="fas fa-user-shield text-success me-2"></i>Managing Your Children's Accounts</h2>
+                        <ul class="list-unstyled">
+                            <li class="mb-2">
+                                <i class="fas fa-check text-success me-2"></i>
+                                Monitor wishlist activities and get notifications
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-check text-success me-2"></i>
+                                Review and approve wishlist items before they're public
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-check text-success me-2"></i>
+                                Control who can see and interact with wishlists
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-check text-success me-2"></i>
+                                Keep track of gift purchases to avoid duplicates
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="mb-5">
+                        <h2 class="h4"><i class="fas fa-shield-alt text-info me-2"></i>Safety Features</h2>
+                        <ul class="list-unstyled">
+                            <li class="mb-2">
+                                <i class="fas fa-lock text-info me-2"></i>
+                                Private sharing links that only work for invited family and friends
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-user-check text-info me-2"></i>
+                                Parent approval required for all wishlist changes
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-key text-info me-2"></i>
+                                Secure account management with two-factor authentication
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-eye-slash text-info me-2"></i>
+                                Granular privacy controls for each wishlist
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="mb-5">
+                        <h2 class="h4"><i class="fas fa-lightbulb text-warning me-2"></i>Tips for Success</h2>
+                        <div class="card-group">
+                            <div class="card border-0 bg-light m-2">
+                                <div class="card-body">
+                                    <h5 class="card-title"><i class="fas fa-star text-warning me-2"></i>Prioritization</h5>
+                                    <p class="card-text">Help children organize their wishes by importance using our priority levels.</p>
+                                </div>
+                            </div>
+                            <div class="card border-0 bg-light m-2">
+                                <div class="card-body">
+                                    <h5 class="card-title"><i class="fas fa-pencil-alt text-warning me-2"></i>Details Matter</h5>
+                                    <p class="card-text">Encourage detailed item descriptions to help gift-givers make the right choice.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-group">
+                            <div class="card border-0 bg-light m-2">
+                                <div class="card-body">
+                                    <h5 class="card-title"><i class="fas fa-clock text-warning me-2"></i>Early Planning</h5>
+                                    <p class="card-text">Share lists well before occasions to give family enough time to coordinate.</p>
+                                </div>
+                            </div>
+                            <div class="card border-0 bg-light m-2">
+                                <div class="card-body">
+                                    <h5 class="card-title"><i class="fas fa-sync text-warning me-2"></i>Stay Updated</h5>
+                                    <p class="card-text">Regularly review and update wishlists to keep them current and relevant.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h2 class="h4"><i class="fas fa-question-circle text-primary me-2"></i>Need Help?</h2>
+                        <p>If you have any questions or need assistance, we're here to help:</p>
+                        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                            <a href="{{ url_for('feedback.feedback_form', type='GENERAL') }}" class="btn btn-primary">
+                                <i class="fas fa-headset me-2"></i>Contact Support
+                            </a>
+                            <a href="{{ url_for('feedback.feedback_form', type='BUG') }}" class="btn btn-outline-secondary">
+                                <i class="fas fa-bug me-2"></i>Report an Issue
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

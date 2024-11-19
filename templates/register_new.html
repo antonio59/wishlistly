@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Create an Account ✨</h4>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label class="form-label">Account Type</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="account_type" id="parent" value="parent" checked>
+                                <label class="form-check-label" for="parent">
+                                    I'm a Parent 👨‍👩‍👧‍👦
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="account_type" id="child" value="child">
+                                <label class="form-check-label" for="child">
+                                    I'm a Kid 🧒
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" name="username" required>
+                            <div class="form-text">Choose a fun username! This will be your unique identifier.</div>
+                        </div>
+
+                        <div class="mb-3 parent-field">
+                            <label for="email" class="form-label">Your Email</label>
+                            <input type="email" class="form-control" id="email" name="email">
+                            <div class="form-text">We'll use this for important notifications.</div>
+                        </div>
+
+                        <div class="mb-3 child-field" style="display: none;">
+                            <label for="parent_email" class="form-label">Parent's Email</label>
+                            <input type="email" class="form-control" id="parent_email" name="parent_email">
+                            <div class="form-text">Ask your parent for their registered email address.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="confirm_password" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Create Account</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center">
+                    <p class="mb-0">Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const accountTypeInputs = document.querySelectorAll('input[name="account_type"]');
+    const parentFields = document.querySelectorAll('.parent-field');
+    const childFields = document.querySelectorAll('.child-field');
+    const emailInput = document.getElementById('email');
+    const parentEmailInput = document.getElementById('parent_email');
+
+    function toggleFields(isChild) {
+        parentFields.forEach(field => field.style.display = isChild ? 'none' : 'block');
+        childFields.forEach(field => field.style.display = isChild ? 'block' : 'none');
+        
+        // Toggle required attributes
+        emailInput.required = !isChild;
+        parentEmailInput.required = isChild;
+    }
+
+    accountTypeInputs.forEach(input => {
+        input.addEventListener('change', function() {
+            toggleFields(this.value === 'child');
+        });
+    });
+});
+</script>
+{% endblock %}

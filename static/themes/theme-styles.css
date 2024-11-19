@@ -1,0 +1,641 @@
+/* Birthday Themes */
+.theme-birthday-classic {
+    --theme-primary-color: #FF69B4;
+    --theme-secondary-color: #4169E1;
+    --theme-background: #FFF5F8;
+    --theme-card-bg: #fff;
+    background-image: url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="3" fill="%23FF69B4" opacity="0.2"/></svg>');
+}
+
+.theme-birthday-rainbow {
+    --theme-primary-color: #FF1493;
+    --theme-secondary-color: #4B0082;
+    --theme-background: #FFF;
+    --theme-card-bg: #fff;
+    background: linear-gradient(45deg, 
+        rgba(255, 0, 0, 0.1),
+        rgba(255, 165, 0, 0.1),
+        rgba(255, 255, 0, 0.1),
+        rgba(0, 128, 0, 0.1),
+        rgba(0, 0, 255, 0.1),
+        rgba(75, 0, 130, 0.1),
+        rgba(238, 130, 238, 0.1)
+    );
+}
+
+.theme-birthday-sparkle {
+    --theme-primary-color: #FFD700;
+    --theme-secondary-color: #C0C0C0;
+    --theme-background: #FFFAF0;
+    --theme-card-bg: #fff;
+    background-image: url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M20 0L23 17L40 20L23 23L20 40L17 23L0 20L17 17Z" fill="%23FFD700" opacity="0.1"/></svg>');
+}
+
+/* Additional Birthday Themes */
+.theme-birthday-unicorn {
+    --theme-primary-color: #FF69B4;
+    --theme-secondary-color: #9B30FF;
+    --theme-background: #FFF0F5;
+    --theme-card-bg: #fff;
+    background: linear-gradient(45deg, 
+        rgba(255, 182, 193, 0.2),
+        rgba(155, 48, 255, 0.2),
+        rgba(135, 206, 235, 0.2)
+    );
+    animation: rainbow-pastel 20s linear infinite;
+}
+
+.theme-birthday-galaxy {
+    --theme-primary-color: #663399;
+    --theme-secondary-color: #4B0082;
+    --theme-background: #000;
+    --theme-card-bg: rgba(255, 255, 255, 0.9);
+    background: radial-gradient(circle at center,
+        #000033,
+        #000066,
+        #000
+    );
+    position: relative;
+}
+
+.theme-birthday-galaxy::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('data:image/svg+xml;utf8,<svg width="4" height="4" viewBox="0 0 4 4" xmlns="http://www.w3.org/2000/svg"><circle cx="2" cy="2" r="1" fill="white" opacity="0.5"/></svg>');
+    animation: twinkle 3s linear infinite;
+    pointer-events: none;
+}
+
+.theme-birthday-princess {
+    --theme-primary-color: #FFB6C1;
+    --theme-secondary-color: #DDA0DD;
+    --theme-background: #FFF0F5;
+    --theme-card-bg: #fff;
+    background-image: url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M20 0L23 7L30 10L23 13L20 20L17 13L10 10L17 7Z" fill="%23FFB6C1" opacity="0.2"/></svg>');
+}
+
+.theme-birthday-superhero {
+    --theme-primary-color: #DC143C;
+    --theme-secondary-color: #4169E1;
+    --theme-background: #F8F9FA;
+    --theme-card-bg: #fff;
+    background: repeating-linear-gradient(
+        45deg,
+        rgba(220, 20, 60, 0.1),
+        rgba(220, 20, 60, 0.1) 10px,
+        rgba(65, 105, 225, 0.1) 10px,
+        rgba(65, 105, 225, 0.1) 20px
+    );
+}
+
+.theme-birthday-dinosaur {
+    --theme-primary-color: #228B22;
+    --theme-secondary-color: #8B4513;
+    --theme-background: #F5F5DC;
+    --theme-card-bg: #fff;
+    background-image: url('data:image/svg+xml;utf8,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><path d="M30 10C35 10 40 15 45 20C50 25 45 35 30 35C15 35 10 25 15 20C20 15 25 10 30 10Z" fill="%23228B22" opacity="0.1"/></svg>');
+}
+
+/* Christmas Themes */
+.theme-christmas-traditional {
+    --theme-primary-color: #D42426;
+    --theme-secondary-color: #165B33;
+    --theme-background: #FFF;
+    --theme-card-bg: #fff;
+    background-image: url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M20 0L40 20L20 40L0 20Z" fill="%23D42426" opacity="0.1"/><path d="M15 15H25V25H15Z" fill="%23165B33" opacity="0.1"/></svg>');
+}
+
+.theme-christmas-snow {
+    --theme-primary-color: #4F83C3;
+    --theme-secondary-color: #A5D8DD;
+    --theme-background: #F0F8FF;
+    --theme-card-bg: #fff;
+    background-image: url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="3" fill="%234F83C3" opacity="0.1"/><circle cx="5" cy="5" r="2" fill="%234F83C3" opacity="0.1"/><circle cx="35" cy="35" r="2" fill="%234F83C3" opacity="0.1"/></svg>');
+}
+
+.theme-christmas-cozy {
+    --theme-primary-color: #8B4513;
+    --theme-secondary-color: #A52A2A;
+    --theme-background: #FFF8DC;
+    --theme-card-bg: #fff;
+    background-image: url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="10" width="20" height="20" fill="%238B4513" opacity="0.1"/></svg>');
+}
+
+/* Generic Themes */
+.theme-elegant {
+    --theme-primary-color: #2C3E50;
+    --theme-secondary-color: #34495E;
+    --theme-background: #F5F5F5;
+    --theme-card-bg: #fff;
+    background-image: url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M0 20h40M20 0v40" stroke="%232C3E50" stroke-width="0.5" opacity="0.1"/></svg>');
+}
+
+.theme-minimalist {
+    --theme-primary-color: #333333;
+    --theme-secondary-color: #666666;
+    --theme-background: #FFFFFF;
+    --theme-card-bg: #fff;
+    background-image: url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="1" fill="%23333333" opacity="0.1"/></svg>');
+}
+
+.theme-nature {
+    --theme-primary-color: #2E7D32;
+    --theme-secondary-color: #388E3C;
+    --theme-background: #F1F8E9;
+    --theme-card-bg: #fff;
+    background-image: url('data:image/svg+xml;utf8,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><path d="M30 10C40 10 45 20 45 30C45 40 35 45 30 45C25 45 15 40 15 30C15 20 20 10 30 10Z" fill="%232E7D32" opacity="0.1"/></svg>');
+}
+
+.theme-ocean {
+    --theme-primary-color: #0277BD;
+    --theme-secondary-color: #0288D1;
+    --theme-background: #E1F5FE;
+    --theme-card-bg: #fff;
+    background: linear-gradient(45deg,
+        rgba(2, 119, 189, 0.1),
+        rgba(2, 136, 209, 0.1)
+    );
+}
+
+.theme-modern {
+    --theme-primary-color: #212121;
+    --theme-secondary-color: #424242;
+    --theme-background: #FAFAFA;
+    --theme-card-bg: #fff;
+    background-image: url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="20" height="20" fill="%23212121" opacity="0.05"/><rect x="20" y="20" width="20" height="20" fill="%23212121" opacity="0.05"/></svg>');
+}
+
+.theme-rustic {
+    --theme-primary-color: #795548;
+    --theme-secondary-color: #8D6E63;
+    --theme-background: #EFEBE9;
+    --theme-card-bg: #fff;
+    background-image: url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h40v5H0zM0 15h40v2H0zM0 30h40v1H0z" fill="%23795548" opacity="0.1"/></svg>');
+}
+
+/* Graduation Themes */
+.theme-graduation-classic {
+    --theme-primary-color: #1A237E;
+    --theme-secondary-color: #283593;
+    --theme-background: #E8EAF6;
+    --theme-card-bg: #fff;
+    background-image: url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M20 10L30 20L20 30L10 20Z" fill="%231A237E" opacity="0.1"/></svg>');
+}
+
+.theme-graduation-modern {
+    --theme-primary-color: #006064;
+    --theme-secondary-color: #00838F;
+    --theme-background: #E0F7FA;
+    --theme-card-bg: #fff;
+    background: linear-gradient(135deg,
+        rgba(0, 96, 100, 0.1) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(0, 96, 100, 0.1) 50%,
+        rgba(0, 96, 100, 0.1) 75%,
+        transparent 75%,
+        transparent
+    );
+    background-size: 40px 40px;
+}
+
+.theme-graduation-celebration {
+    --theme-primary-color: #4A148C;
+    --theme-secondary-color: #6A1B9A;
+    --theme-background: #F3E5F5;
+    --theme-card-bg: #fff;
+    background-image: url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M20 0L23 17L40 20L23 23L20 40L17 23L0 20L17 17Z" fill="%234A148C" opacity="0.1"/></svg>');
+}
+
+/* Theme Headers */
+.balloon-header {
+    position: relative;
+    overflow: hidden;
+}
+
+.balloon-header::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    right: -20px;
+    bottom: -20px;
+    background-image: url('data:image/svg+xml;utf8,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="15" fill="%23FFF" opacity="0.1"/></svg>');
+    z-index: 0;
+}
+
+.rainbow-header {
+    position: relative;
+    animation: rainbow-bg 10s linear infinite;
+}
+
+.glitter-header {
+    position: relative;
+    overflow: hidden;
+}
+
+.glitter-header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('data:image/svg+xml;utf8,<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2L12 8L18 10L12 12L10 18L8 12L2 10L8 8Z" fill="%23FFF" opacity="0.2"/></svg>');
+    animation: sparkle-bg 3s linear infinite;
+}
+
+.wreath-header {
+    position: relative;
+    border: 8px solid transparent;
+    border-image: url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="15" stroke="%23165B33" stroke-width="2" fill="none" opacity="0.2"/></svg>') 30 round;
+}
+
+.snow-header {
+    position: relative;
+    overflow: hidden;
+}
+
+.snow-header::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    right: -50%;
+    bottom: -50%;
+    background-image: url('data:image/svg+xml;utf8,<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="2" fill="%23FFF" opacity="0.3"/></svg>');
+    animation: snow-fall 10s linear infinite;
+}
+
+.warm-header {
+    position: relative;
+    background-image: url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h40v40H0z" fill="%238B4513" opacity="0.1"/><path d="M0 10h40v3H0zM0 25h40v3H0z" fill="%23A52A2A" opacity="0.1"/></svg>');
+}
+
+/* Additional Theme Headers */
+.unicorn-header {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(45deg,
+        rgba(255, 192, 203, 0.3),
+        rgba(255, 182, 193, 0.3),
+        rgba(255, 105, 180, 0.3),
+        rgba(199, 21, 133, 0.3)
+    );
+    animation: rainbow-pastel 10s linear infinite;
+}
+
+.unicorn-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('data:image/svg+xml;utf8,<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2L12 8L18 10L12 12L10 18L8 12L2 10L8 8Z" fill="%23FFF" opacity="0.3"/></svg>');
+    animation: float 6s ease-in-out infinite;
+}
+
+.galaxy-header {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(to right,
+        #000033,
+        #4B0082,
+        #000033
+    );
+}
+
+.galaxy-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    right: -50%;
+    bottom: -50%;
+    background-image: url('data:image/svg+xml;utf8,<svg width="4" height="4" viewBox="0 0 4 4" xmlns="http://www.w3.org/2000/svg"><circle cx="2" cy="2" r="1" fill="white" opacity="0.5"/></svg>');
+    animation: rotate 100s linear infinite;
+}
+
+.princess-header {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(45deg,
+        rgba(255, 182, 193, 0.3),
+        rgba(221, 160, 221, 0.3)
+    );
+    border: 8px solid transparent;
+    border-image: url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M20 0L23 7L30 10L23 13L20 20L17 13L10 10L17 7Z" fill="%23DDA0DD" opacity="0.3"/></svg>') 30 round;
+}
+
+.superhero-header {
+    position: relative;
+    background: linear-gradient(45deg,
+        rgba(220, 20, 60, 0.2),
+        rgba(65, 105, 225, 0.2)
+    );
+    border: 4px solid transparent;
+    border-image: repeating-linear-gradient(
+        45deg,
+        rgba(220, 20, 60, 0.3),
+        rgba(220, 20, 60, 0.3) 10px,
+        rgba(65, 105, 225, 0.3) 10px,
+        rgba(65, 105, 225, 0.3) 20px
+    ) 1;
+}
+
+.dinosaur-header {
+    position: relative;
+    background-color: rgba(34, 139, 34, 0.1);
+    border-bottom: 4px solid rgba(139, 69, 19, 0.3);
+}
+
+/* Generic Theme Headers */
+.elegant-header {
+    position: relative;
+    border-bottom: 2px solid var(--theme-primary-color);
+}
+
+.minimalist-header {
+    position: relative;
+    padding: 2rem 0;
+}
+
+.nature-header {
+    position: relative;
+    background: linear-gradient(to bottom,
+        rgba(46, 125, 50, 0.1),
+        transparent
+    );
+}
+
+.ocean-header {
+    position: relative;
+    background: linear-gradient(45deg,
+        rgba(2, 119, 189, 0.2),
+        rgba(2, 136, 209, 0.2)
+    );
+}
+
+.modern-header {
+    position: relative;
+    border-bottom: 4px solid var(--theme-primary-color);
+}
+
+.rustic-header {
+    position: relative;
+    background-image: url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h40v5H0z" fill="%23795548" opacity="0.2"/></svg>');
+}
+
+/* Graduation Theme Headers */
+.graduation-classic-header {
+    position: relative;
+    border-bottom: 4px solid var(--theme-primary-color);
+    background: linear-gradient(to right,
+        rgba(26, 35, 126, 0.1),
+        rgba(40, 53, 147, 0.1)
+    );
+}
+
+.graduation-modern-header {
+    position: relative;
+    background: linear-gradient(135deg,
+        rgba(0, 96, 100, 0.2) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(0, 96, 100, 0.2) 50%,
+        rgba(0, 96, 100, 0.2) 75%,
+        transparent 75%,
+        transparent
+    );
+    background-size: 40px 40px;
+}
+
+.graduation-celebration-header {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(to right,
+        rgba(74, 20, 140, 0.2),
+        rgba(106, 27, 154, 0.2)
+    );
+}
+
+/* Theme Animations */
+@keyframes rainbow-bg {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+}
+
+@keyframes sparkle-bg {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0.2; }
+    50% { transform: translateY(-10px) rotate(180deg); opacity: 0.4; }
+    100% { transform: translateY(0) rotate(360deg); opacity: 0.2; }
+}
+
+@keyframes snow-fall {
+    0% { transform: translateY(-20%) rotate(0deg); }
+    100% { transform: translateY(20%) rotate(360deg); }
+}
+
+/* Additional Animations */
+@keyframes rainbow-pastel {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 0.5; }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(5deg); }
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Theme Card Styles */
+.theme-birthday-classic .card,
+.theme-birthday-rainbow .card,
+.theme-birthday-sparkle .card {
+    border-radius: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.theme-christmas-traditional .card,
+.theme-christmas-snow .card,
+.theme-christmas-cozy .card {
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.theme-birthday-unicorn .card,
+.theme-birthday-princess .card {
+    border-radius: 20px;
+    border: 1px solid rgba(255, 182, 193, 0.3);
+    box-shadow: 0 4px 15px rgba(155, 48, 255, 0.1);
+}
+
+.theme-birthday-galaxy .card {
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.theme-birthday-superhero .card {
+    border-radius: 0;
+    border: 2px solid var(--theme-primary-color);
+    transform: skew(-2deg);
+}
+
+.theme-birthday-dinosaur .card {
+    border-radius: 8px;
+    border: 2px solid var(--theme-secondary-color);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.theme-elegant .card,
+.theme-minimalist .card {
+    border-radius: 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.theme-nature .card,
+.theme-ocean .card {
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.theme-modern .card {
+    border-radius: 4px;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.theme-rustic .card {
+    border-radius: 0;
+    border: 2px solid var(--theme-secondary-color);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.theme-graduation-classic .card,
+.theme-graduation-modern .card,
+.theme-graduation-celebration .card {
+    border-radius: 8px;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Card Hover Effects */
+[class*="theme-"] .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Priority Section Styles */
+[class*="theme-"] .priority-section {
+    padding: 1.5rem;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(5px);
+    margin-bottom: 2rem;
+}
+
+/* Theme-specific Priority Colors */
+.theme-birthday-classic .priority-high { color: var(--theme-primary-color); }
+.theme-birthday-rainbow .priority-high { background: linear-gradient(45deg, #FF0000, #FF69B4); -webkit-background-clip: text; color: transparent; }
+.theme-birthday-sparkle .priority-high { color: var(--theme-primary-color); text-shadow: 0 0 5px rgba(255, 215, 0, 0.5); }
+
+.theme-christmas-traditional .priority-high { color: var(--theme-primary-color); }
+.theme-christmas-snow .priority-high { color: var(--theme-primary-color); text-shadow: 0 0 5px rgba(79, 131, 195, 0.5); }
+.theme-christmas-cozy .priority-high { color: var(--theme-primary-color); }
+
+.theme-birthday-unicorn .priority-high { color: var(--theme-primary-color); }
+.theme-birthday-princess .priority-high { color: var(--theme-primary-color); }
+.theme-birthday-galaxy .priority-high { color: var(--theme-primary-color); }
+.theme-birthday-superhero .priority-high { color: var(--theme-primary-color); }
+.theme-birthday-dinosaur .priority-high { color: var(--theme-primary-color); }
+
+.theme-elegant .priority-high { color: var(--theme-primary-color); }
+.theme-minimalist .priority-high { color: var(--theme-primary-color); }
+.theme-nature .priority-high { color: var(--theme-primary-color); }
+.theme-ocean .priority-high { color: var(--theme-primary-color); }
+.theme-modern .priority-high { color: var(--theme-primary-color); }
+.theme-rustic .priority-high { color: var(--theme-primary-color); }
+
+.theme-graduation-classic .priority-high { color: var(--theme-primary-color); }
+.theme-graduation-modern .priority-high { color: var(--theme-primary-color); }
+.theme-graduation-celebration .priority-high { color: var(--theme-primary-color); }
+
+/* Theme-specific Button Styles */
+.theme-birthday-unicorn .btn-primary,
+.theme-birthday-princess .btn-primary {
+    background: linear-gradient(45deg, var(--theme-primary-color), var(--theme-secondary-color));
+    border: none;
+    border-radius: 25px;
+}
+
+.theme-birthday-galaxy .btn-primary {
+    background: var(--theme-primary-color);
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(155, 48, 255, 0.3);
+}
+
+.theme-birthday-superhero .btn-primary {
+    background: var(--theme-primary-color);
+    border: none;
+    transform: skew(-2deg);
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.theme-birthday-dinosaur .btn-primary {
+    background: var(--theme-primary-color);
+    border: 2px solid var(--theme-secondary-color);
+    border-radius: 4px;
+}
+
+.theme-elegant .btn-primary,
+.theme-minimalist .btn-primary {
+    border-radius: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.theme-nature .btn-primary,
+.theme-ocean .btn-primary {
+    border-radius: 25px;
+    text-transform: none;
+}
+
+.theme-modern .btn-primary {
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.theme-rustic .btn-primary {
+    border-radius: 0;
+    border: 2px solid var(--theme-secondary-color);
+    background: var(--theme-primary-color);
+}
+
+.theme-graduation-classic .btn-primary,
+.theme-graduation-modern .btn-primary,
+.theme-graduation-celebration .btn-primary {
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-weight: bold;
+}

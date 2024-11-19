@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+
+{% block title %}Kids Safety Guide{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="text-center mb-4">
+                <h1 class="display-4 mb-3">
+                    <i class="fas fa-shield-alt text-primary"></i>
+                    Kids Safety Guide
+                </h1>
+                <p class="lead">Hey kids! Here are some important tips to stay safe while using Wishlistly!</p>
+            </div>
+
+            <div class="row g-4">
+                <!-- Personal Information -->
+                <div class="col-md-6">
+                    <div class="card h-100 border-primary">
+                        <div class="card-body">
+                            <h3 class="h5 card-title">
+                                <i class="fas fa-user-secret text-primary me-2"></i>
+                                Keep Personal Info Private
+                            </h3>
+                            <ul class="list-unstyled">
+                                <li class="mb-2">
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    Never share your real name
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    Don't post your address
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    Keep your school name secret
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Password Safety -->
+                <div class="col-md-6">
+                    <div class="card h-100 border-warning">
+                        <div class="card-body">
+                            <h3 class="h5 card-title">
+                                <i class="fas fa-key text-warning me-2"></i>
+                                Password Power
+                            </h3>
+                            <ul class="list-unstyled">
+                                <li class="mb-2">
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    Use a strong password
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    Never share your password
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    Tell a parent if you forget it
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Online Friends -->
+                <div class="col-md-6">
+                    <div class="card h-100 border-danger">
+                        <div class="card-body">
+                            <h3 class="h5 card-title">
+                                <i class="fas fa-users text-danger me-2"></i>
+                                Online Friends
+                            </h3>
+                            <ul class="list-unstyled">
+                                <li class="mb-2">
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    Only share wishlists with people you know
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    Ask parents before sharing
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    Don't chat with strangers
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tell a Grown-Up -->
+                <div class="col-md-6">
+                    <div class="card h-100 border-success">
+                        <div class="card-body">
+                            <h3 class="h5 card-title">
+                                <i class="fas fa-hand-holding-heart text-success me-2"></i>
+                                Tell a Grown-Up If...
+                            </h3>
+                            <ul class="list-unstyled">
+                                <li class="mb-2">
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    Someone asks for personal info
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    You see something scary
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    You feel uncomfortable
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mt-4 bg-light">
+                <div class="card-body text-center">
+                    <h3 class="h5 mb-3">Remember!</h3>
+                    <p class="mb-0">
+                        If you ever feel unsure or scared about something online,
+                        always tell your parents or a trusted grown-up right away!
+                    </p>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="{{ url_for('parents_guide') }}" class="btn btn-primary">
+                    <i class="fas fa-arrow-right me-2"></i>
+                    Parents Guide
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        transition: transform 0.2s;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+    }
+    .card-title {
+        border-bottom: 2px solid rgba(0,0,0,0.1);
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+    }
+</style>
+{% endblock %}

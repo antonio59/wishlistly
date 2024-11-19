@@ -1,0 +1,286 @@
+{% extends "base.html" %}
+
+{% block title %}{{ wishlist.title }}{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="wishlist-header mb-4">
+        <h1 class="display-4">
+            <i class="fas fa-gift text-primary me-2"></i>
+            {{ wishlist.title }}
+        </h1>
+        {% if wishlist.description %}
+            <p class="lead text-muted">{{ wishlist.description }}</p>
+        {% endif %}
+        
+        {% if wishlist.occasion %}
+            <div class="occasion-badge mb-3">
+                {% if wishlist.occasion == 'birthday' %}
+                    <i class="fas fa-birthday-cake me-2"></i>Birthday Wishlist
+                    {% if wishlist.turning_age %}
+                        <span class="ms-2">(Turning {{ wishlist.turning_age }})</span>
+                    {% endif %}
+                {% elif wishlist.occasion == 'christmas' %}
+                    <i class="fas fa-tree me-2"></i>Christmas Wishlist
+                {% elif wishlist.occasion == 'graduation' %}
+                    <i class="fas fa-graduation-cap me-2"></i>Graduation Wishlist
+                    {% if wishlist.school_name %}
+                        <span class="ms-2">({{ wishlist.school_name }})</span>
+                    {% endif %}
+                {% endif %}
+            </div>
+        {% endif %}
+        
+        <div class="wishlist-actions">
+            <a href="{{ url_for('add_wishlist_item', wishlist_id=wishlist.id) }}" class="btn btn-primary">
+                <i class="fas fa-plus-circle me-2"></i>Add Item
+            </a>
+            <a href="{{ url_for('edit_wishlist', wishlist_id=wishlist.id) }}" class="btn btn-outline-primary">
+                <i class="fas fa-edit me-2"></i>Edit Wishlist
+            </a>
+            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#shareModal">
+                <i class="fas fa-share-alt me-2"></i>Share
+            </button>
+        </div>
+    </div>
+
+    <div class="row">
+        {% if wishlist.items %}
+            {% for item in wishlist.items %}
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 wishlist-item">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h3 class="wishlist-item-title">{{ item.name }}</h3>
+                                <div class="dropdown">
+                                    <button class="btn btn-link text-muted" type="button" data-bs-toggle="dropdown">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item" href="{{ url_for('edit_wishlist_item', item_id=item.id) }}">
+                                                <i class="fas fa-edit me-2"></i>Edit
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <form action="{{ url_for('delete_wishlist_item', item_id=item.id) }}" method="POST" class="d-inline">
+                                                <button type="submit" class="dropdown-item text-danger" onclick="return confirm('Are you sure you want to delete this item?')">
+                                                    <i class="fas fa-trash-alt me-2"></i>Delete
+                                                </button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            {% if item.description %}
+                                <p class="wishlist-item-description">{{ item.description }}</p>
+                            {% endif %}
+
+                            <div class="wishlist-item-details">
+                                {% if item.price %}
+                                    <div class="price-badge">
+                                        <i class="fas fa-tag me-1"></i>${{ "%.2f"|format(item.price) }}
+                                    </div>
+                                {% endif %}
+
+                                <div class="priority-badge priority-{{ item.priority }}">
+                                    <i class="fas fa-star me-1"></i>{{ item.priority|title }} Priority
+                                </div>
+
+                                {% if item.purchased %}
+                                    <div class="purchased-badge">
+                                        <i class="fas fa-check-circle me-1"></i>Purchased
+                                        {% if item.purchased_by %}
+                                            by {{ item.purchased_by }}
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            {% if item.url %}
+                                <div class="mt-3">
+                                    <a href="{{ item.url }}" target="_blank" class="btn btn-outline-primary btn-sm w-100">
+                                        <i class="fas fa-external-link-alt me-2"></i>View Item
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-12">
+                <div class="empty-state">
+                    <div class="empty-state-icon">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <h2>No Items Yet!</h2>
+                    <p class="text-muted">Start adding items to your wishlist!</p>
+                    <a href="{{ url_for('add_wishlist_item', wishlist_id=wishlist.id) }}" class="btn btn-primary">
+                        <i class="fas fa-plus-circle me-2"></i>Add First Item
+                    </a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Share Modal -->
+<div class="modal fade" id="shareModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Share Wishlist</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">Wishlist Link</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="wishlistUrl" readonly
+                               value="{{ url_for('view_wishlist', wishlist_id=wishlist.id, _external=True) }}">
+                        <button class="btn btn-outline-primary" onclick="copyWishlistUrl()">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="d-grid">
+                    <button class="btn btn-primary" onclick="shareWishlist()">
+                        <i class="fas fa-share-alt me-2"></i>Share
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block styles %}
+<style>
+.wishlist-header {
+    text-align: center;
+    background-color: var(--bs-white);
+    border-radius: var(--bs-border-radius-lg);
+    padding: 2rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.wishlist-actions {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.occasion-badge {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: var(--bs-primary);
+    color: white;
+    border-radius: 2rem;
+    font-size: 0.9rem;
+}
+
+.wishlist-item {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.wishlist-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.wishlist-item-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--bs-primary);
+    margin-bottom: 0.5rem;
+}
+
+.wishlist-item-description {
+    color: var(--bs-gray-600);
+    margin-bottom: 1rem;
+}
+
+.wishlist-item-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.price-badge,
+.priority-badge,
+.purchased-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.875rem;
+    display: inline-flex;
+    align-items: center;
+}
+
+.price-badge {
+    background-color: var(--bs-light);
+    color: var(--bs-primary);
+}
+
+.priority-high {
+    background-color: #dc3545;
+    color: white;
+}
+
+.priority-medium {
+    background-color: #ffc107;
+    color: #000;
+}
+
+.priority-low {
+    background-color: #198754;
+    color: white;
+}
+
+.purchased-badge {
+    background-color: #198754;
+    color: white;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    background-color: var(--bs-white);
+    border-radius: var(--bs-border-radius-lg);
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.empty-state-icon {
+    font-size: 3rem;
+    color: var(--bs-primary);
+    margin-bottom: 1.5rem;
+}
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function copyWishlistUrl() {
+    var urlInput = document.getElementById('wishlistUrl');
+    urlInput.select();
+    document.execCommand('copy');
+    alert('Wishlist URL copied to clipboard!');
+}
+
+function shareWishlist() {
+    if (navigator.share) {
+        navigator.share({
+            title: '{{ wishlist.title }}',
+            text: 'Check out my wishlist: {{ wishlist.title }}',
+            url: document.getElementById('wishlistUrl').value
+        })
+        .catch(console.error);
+    } else {
+        copyWishlistUrl();
+    }
+}
+</script>
+{% endblock %}

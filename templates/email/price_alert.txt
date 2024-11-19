@@ -1,0 +1,11 @@
+Good news! The price of {{ item_name }} has dropped at {{ store_name }}!
+
+Price changed from ${{ old_price }} to ${{ new_price }}
+
+View the item here:
+{{ item_url }}
+
+Note: Prices and availability are subject to change. Please verify the price before making a purchase.
+
+Kids Wishlist - Making Gift-Giving Fun and Easy!
+This is an automated message, please do not reply.

@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+
+{% block title %}Terms of Service{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <h1 class="mb-4">Terms of Service</h1>
+            
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i>
+                Last updated: {{ current_year }}
+            </div>
+
+            <!-- Introduction -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h2 class="h5 mb-0">1. Introduction</h2>
+                </div>
+                <div class="card-body">
+                    <p>Welcome to Wishlistly ("we," "our," or "us"). By accessing or using our service, you agree to these Terms of Service. If you are under 13, you must have your parent or legal guardian's permission to use Wishlistly.</p>
+                </div>
+            </div>
+
+            <!-- Account Terms -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h2 class="h5 mb-0">2. Account Terms</h2>
+                </div>
+                <div class="card-body">
+                    <h3 class="h6">2.1 Account Creation</h3>
+                    <ul>
+                        <li>Parent accounts must provide valid email addresses</li>
+                        <li>Child accounts must be created and managed by parents</li>
+                        <li>All account information must be accurate and complete</li>
+                    </ul>
+
+                    <h3 class="h6 mt-3">2.2 Account Security</h3>
+                    <ul>
+                        <li>You are responsible for maintaining account security</li>
+                        <li>Notify us immediately of any unauthorized access</li>
+                        <li>Do not share account credentials</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Service Rules -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h2 class="h5 mb-0">3. Service Rules</h2>
+                </div>
+                <div class="card-body">
+                    <h3 class="h6">3.1 Acceptable Use</h3>
+                    <ul>
+                        <li>Use the service for personal, non-commercial purposes</li>
+                        <li>Create and share wishlists appropriately</li>
+                        <li>Respect other users' privacy</li>
+                    </ul>
+
+                    <h3 class="h6 mt-3">3.2 Prohibited Activities</h3>
+                    <ul>
+                        <li>No inappropriate or harmful content</li>
+                        <li>No harassment or bullying</li>
+                        <li>No unauthorized automated access</li>
+                        <li>No interference with service operation</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Privacy and Data -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h2 class="h5 mb-0">4. Privacy and Data</h2>
+                </div>
+                <div class="card-body">
+                    <p>Our Privacy Policy explains how we collect, use, and protect your information. By using Wishlistly, you agree to our data practices as described in the Privacy Policy.</p>
+                    
+                    <h3 class="h6 mt-3">4.1 Data Collection</h3>
+                    <ul>
+                        <li>We collect minimal necessary information</li>
+                        <li>Parent approval required for child data collection</li>
+                        <li>Data is protected according to GDPR standards</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Content Rights -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h2 class="h5 mb-0">5. Content Rights</h2>
+                </div>
+                <div class="card-body">
+                    <h3 class="h6">5.1 User Content</h3>
+                    <ul>
+                        <li>You retain rights to your content</li>
+                        <li>We may display content within the service</li>
+                        <li>You are responsible for your content</li>
+                    </ul>
+
+                    <h3 class="h6 mt-3">5.2 Service Content</h3>
+                    <ul>
+                        <li>Our content is protected by copyright</li>
+                        <li>Limited license for personal use only</li>
+                        <li>No commercial use without permission</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Changes and Termination -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h2 class="h5 mb-0">6. Changes and Termination</h2>
+                </div>
+                <div class="card-body">
+                    <h3 class="h6">6.1 Service Changes</h3>
+                    <ul>
+                        <li>We may modify the service at any time</li>
+                        <li>Changes will be communicated appropriately</li>
+                        <li>Continued use implies acceptance of changes</li>
+                    </ul>
+
+                    <h3 class="h6 mt-3">6.2 Account Termination</h3>
+                    <ul>
+                        <li>You may delete your account at any time</li>
+                        <li>We may terminate accounts for violations</li>
+                        <li>Data retention policies apply after termination</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h2 class="h5 mb-0">7. Contact Information</h2>
+                </div>
+                <div class="card-body">
+                    <p>For questions about these terms, please contact us at:</p>
+                    <ul>
+                        <li>Email: support@wishlistly.com</li>
+                        <li>Address: [Your Business Address]</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="{{ url_for('privacy_policy') }}" class="btn btn-primary me-2">
+                    <i class="fas fa-lock me-2"></i>
+                    Privacy Policy
+                </a>
+                <a href="{{ url_for('kids_safety') }}" class="btn btn-outline-primary">
+                    <i class="fas fa-child me-2"></i>
+                    Kids Safety Guide
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

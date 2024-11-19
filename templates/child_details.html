@@ -1,0 +1,266 @@
+{% extends "base.html" %}
+
+{% block title %}{{ child.username }}'s Details{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item active">{{ child.username }}'s Details</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        <div class="avatar-circle mx-auto mb-3" style="width: 100px; height: 100px; font-size: 2.5rem;">
+                            {{ child.username[0]|upper }}
+                        </div>
+                        <h2 class="h4">{{ child.username }}</h2>
+                        <p class="text-muted">
+                            {% if child.is_managed %}
+                                Parent Managed Account
+                            {% else %}
+                                Child Managed Account
+                            {% endif %}
+                        </p>
+                    </div>
+
+                    <div class="mb-4">
+                        <h3 class="h5 mb-3">Account Details</h3>
+                        <dl class="row mb-0">
+                            <dt class="col-sm-4">Status</dt>
+                            <dd class="col-sm-8">
+                                {% if child.is_active %}
+                                    <span class="badge bg-success">Active</span>
+                                {% else %}
+                                    <span class="badge bg-danger">Disabled</span>
+                                {% endif %}
+                            </dd>
+
+                            <dt class="col-sm-4">Created</dt>
+                            <dd class="col-sm-8">{{ child.created_at.strftime('%B %d, %Y') }}</dd>
+
+                            {% if child.email %}
+                            <dt class="col-sm-4">Email</dt>
+                            <dd class="col-sm-8">{{ child.email }}</dd>
+                            {% endif %}
+
+                            <dt class="col-sm-4">Wishlists</dt>
+                            <dd class="col-sm-8">{{ wishlists|length }}</dd>
+                        </dl>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <a href="{{ url_for('edit_child', child_id=child.id) }}" class="btn btn-primary">
+                            <i class="fas fa-edit me-2"></i>Edit Account
+                        </a>
+                        <a href="{{ url_for('switch_to_child', child_id=child.id) }}" class="btn btn-outline-secondary">
+                            <i class="fas fa-user-switch me-2"></i>Switch to Account
+                        </a>
+                        <button class="btn btn-outline-danger" onclick="toggleChildStatus('{{ child.id }}')">
+                            {% if child.is_active %}
+                                <i class="fas fa-ban me-2"></i>Disable Account
+                            {% else %}
+                                <i class="fas fa-check-circle me-2"></i>Enable Account
+                            {% endif %}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="h5 mb-0">Wishlists</h3>
+                </div>
+                <div class="card-body">
+                    {% if wishlists %}
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Occasion</th>
+                                        <th>Items</th>
+                                        <th>Created</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for wishlist in wishlists %}
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <span class="theme-dot me-2" style="background-color: {{ wishlist.theme_color }}"></span>
+                                                {{ wishlist.title }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-primary">{{ wishlist.occasion }}</span>
+                                        </td>
+                                        <td>
+                                            <div class="small">
+                                                {{ wishlist.items|length }} items
+                                                <br>
+                                                <span class="text-muted">
+                                                    {{ wishlist.items|selectattr('purchased')|list|length }} purchased
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td>{{ wishlist.created_at.strftime('%Y-%m-%d') }}</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a href="{{ url_for('view_wishlist', wishlist_id=wishlist.id) }}" 
+                                                   class="btn btn-sm btn-outline-primary">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                <a href="{{ url_for('edit_wishlist', wishlist_id=wishlist.id) }}" 
+                                                   class="btn btn-sm btn-outline-secondary">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <button class="btn btn-sm btn-outline-info share-button"
+                                                        data-wishlist-id="{{ wishlist.id }}">
+                                                    <i class="fas fa-share-alt"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="text-center py-4">
+                            <div class="display-1 text-muted mb-3">
+                                <i class="fas fa-gift"></i>
+                            </div>
+                            <h3 class="h4 text-muted">No Wishlists Yet</h3>
+                            <p class="text-muted mb-3">{{ child.username }} hasn't created any wishlists yet.</p>
+                            <a href="{{ url_for('switch_to_child', child_id=child.id) }}" class="btn btn-primary">
+                                <i class="fas fa-plus me-2"></i>Create First Wishlist
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Share Modal -->
+<div class="modal fade" id="shareModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Share Wishlist</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>Share this wishlist with family and friends:</p>
+                <div class="input-group mb-3">
+                    <input type="text" id="shareUrl" class="form-control" readonly>
+                    <button class="btn btn-outline-primary" type="button" onclick="copyShareUrl()">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </div>
+                <div class="alert alert-success d-none" id="copySuccess">
+                    Link copied to clipboard!
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.avatar-circle {
+    background-color: var(--bs-primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.theme-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.btn-group .btn {
+    padding: 0.25rem 0.5rem;
+}
+
+.table td {
+    vertical-align: middle;
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function toggleChildStatus(childId) {
+    const action = {{ child.is_active|tojson }} ? 'disable' : 'enable';
+    if (confirm(`Are you sure you want to ${action} this account?`)) {
+        fetch(`/parent/child/${childId}/toggle-status`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        }).then(response => response.json())
+          .then(data => {
+              if (data.success) {
+                  location.reload();
+              } else {
+                  alert(data.message);
+              }
+          });
+    }
+}
+
+// Share functionality
+document.querySelectorAll('.share-button').forEach(button => {
+    button.addEventListener('click', function() {
+        const wishlistId = this.dataset.wishlistId;
+        showShareModal(wishlistId);
+    });
+});
+
+function showShareModal(wishlistId) {
+    fetch(`/wishlist/${wishlistId}/share`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById('shareUrl').value = data.share_url;
+                new bootstrap.Modal(document.getElementById('shareModal')).show();
+            } else {
+                alert('Error generating share link');
+            }
+        });
+}
+
+function copyShareUrl() {
+    const shareUrl = document.getElementById('shareUrl');
+    shareUrl.select();
+    document.execCommand('copy');
+    
+    const successAlert = document.getElementById('copySuccess');
+    successAlert.classList.remove('d-none');
+    setTimeout(() => {
+        successAlert.classList.add('d-none');
+    }, 3000);
+}
+</script>
+{% endblock %}

@@ -1,0 +1,7 @@
+{{ sharer_name }} has shared their wishlist "{{ wishlist_title }}" with you!
+
+Click the link below to view the wishlist:
+{{ wishlist_url }}
+
+Kids Wishlist - Making Gift-Giving Fun and Easy!
+This is an automated message, please do not reply.

@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+
+{% block title %}Kid's Guide - Wishlistly{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h1 class="text-center mb-4">
+                        <i class="fas fa-star text-warning me-2"></i>
+                        Kid's Guide to Wishlistly
+                        <i class="fas fa-star text-warning ms-2"></i>
+                    </h1>
+                    
+                    <div class="mb-5">
+                        <h2 class="h4">
+                            <i class="fas fa-magic text-primary me-2"></i>
+                            Creating Your Wishlist
+                        </h2>
+                        <div class="card bg-light border-0 mb-3">
+                            <div class="card-body">
+                                <ol class="list-unstyled">
+                                    <li class="mb-3">
+                                        <span class="badge bg-primary me-2">1</span>
+                                        Click the big "Create New Wishlist" button 
+                                        <i class="fas fa-plus-circle text-primary ms-2"></i>
+                                    </li>
+                                    <li class="mb-3">
+                                        <span class="badge bg-primary me-2">2</span>
+                                        Pick a fun theme for your list 
+                                        <i class="fas fa-paint-brush text-primary ms-2"></i>
+                                    </li>
+                                    <li class="mb-3">
+                                        <span class="badge bg-primary me-2">3</span>
+                                        Add all your favorite items 
+                                        <i class="fas fa-gift text-primary ms-2"></i>
+                                    </li>
+                                    <li class="mb-3">
+                                        <span class="badge bg-primary me-2">4</span>
+                                        Show how much you want each thing 
+                                        <i class="fas fa-heart text-primary ms-2"></i>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-5">
+                        <h2 class="h4">
+                            <i class="fas fa-gift text-success me-2"></i>
+                            Adding Cool Stuff
+                        </h2>
+                        <div class="card bg-light border-0 mb-3">
+                            <div class="card-body">
+                                <ul class="list-unstyled">
+                                    <li class="mb-3">
+                                        <i class="fas fa-link text-success me-2"></i>
+                                        Copy links from your favorite stores
+                                    </li>
+                                    <li class="mb-3">
+                                        <i class="fas fa-comment text-success me-2"></i>
+                                        Tell everyone why you want it
+                                    </li>
+                                    <li class="mb-3">
+                                        <i class="fas fa-star text-success me-2"></i>
+                                        Pick how much you want it:
+                                        <div class="ms-4 mt-2">
+                                            <div class="mb-2">
+                                                <span class="badge bg-danger">Must Have</span>
+                                                <i class="fas fa-star text-danger ms-2"></i>
+                                                <i class="fas fa-star text-danger"></i>
+                                                <i class="fas fa-star text-danger"></i>
+                                            </div>
+                                            <div class="mb-2">
+                                                <span class="badge bg-success">Would Love</span>
+                                                <i class="fas fa-star text-success ms-2"></i>
+                                                <i class="fas fa-star text-success"></i>
+                                            </div>
+                                            <div>
+                                                <span class="badge bg-info">Nice to Have</span>
+                                                <i class="fas fa-star text-info ms-2"></i>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-5">
+                        <h2 class="h4">
+                            <i class="fas fa-paint-brush text-info me-2"></i>
+                            Make Your List Super Special
+                        </h2>
+                        <div class="card-group">
+                            <div class="card border-0 bg-light m-2">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-birthday-cake text-info fa-2x mb-3"></i>
+                                    <h5 class="card-title">Pick Fun Themes</h5>
+                                    <p class="card-text">Birthday, Holiday, or any special day!</p>
+                                </div>
+                            </div>
+                            <div class="card border-0 bg-light m-2">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-tshirt text-info fa-2x mb-3"></i>
+                                    <h5 class="card-title">Add Details</h5>
+                                    <p class="card-text">Like your favorite colors and sizes</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-5">
+                        <h2 class="h4">
+                            <i class="fas fa-share-alt text-warning me-2"></i>
+                            Sharing Your List
+                        </h2>
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            Ask your parents to help you share your list with family and friends!
+                        </div>
+                        <div class="card bg-light border-0">
+                            <div class="card-body">
+                                <ul class="list-unstyled">
+                                    <li class="mb-3">
+                                        <i class="fas fa-user-shield text-warning me-2"></i>
+                                        Your parents will help you share safely
+                                    </li>
+                                    <li class="mb-3">
+                                        <i class="fas fa-calendar-alt text-warning me-2"></i>
+                                        Update your list before birthdays and holidays
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h2 class="h4">
+                            <i class="fas fa-question-circle text-primary me-2"></i>
+                            Need Help?
+                        </h2>
+                        <p class="text-center">If you need help with anything:</p>
+                        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                            <a href="{{ url_for('feedback.feedback_form', type='GENERAL') }}" class="btn btn-primary">
+                                <i class="fas fa-hands-helping me-2"></i>Ask for Help
+                            </a>
+                            <button class="btn btn-success" onclick="askParent()">
+                                <i class="fas fa-user-shield me-2"></i>Ask a Parent
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function askParent() {
+    Swal.fire({
+        title: 'Ask a Parent!',
+        text: 'Please ask your parent or guardian to help you with Wishlistly!',
+        icon: 'info',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#28a745'
+    });
+}
+</script>
+{% endblock %}

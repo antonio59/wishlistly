@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h2 class="h4 mb-0">
+                <i class="fas fa-user-plus me-2"></i>
+                Create Account
+            </h2>
+        </div>
+        <div class="card-body">
+            <div class="mb-4">
+                <div class="btn-group w-100" role="group">
+                    <input type="radio" class="btn-check" name="account_type" id="parent" value="parent" checked>
+                    <label class="btn btn-outline-primary" for="parent">
+                        <i class="fas fa-user-tie me-2"></i>
+                        Parent Account
+                    </label>
+                    <input type="radio" class="btn-check" name="account_type" id="teen" value="teen">
+                    <label class="btn btn-outline-primary" for="teen">
+                        <i class="fas fa-user-graduate me-2"></i>
+                        Teen Account (13-17)
+                    </label>
+                </div>
+            </div>
+
+            <form method="POST">
+                <input type="hidden" name="account_type" id="account_type_input" value="parent">
+                
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="fas fa-user"></i>
+                        </span>
+                        <input type="text" class="form-control" id="username" name="username" required
+                               pattern="[A-Za-z0-9_]{3,}"
+                               title="Username must be at least 3 characters long and can only contain letters, numbers, and underscores">
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="fas fa-envelope"></i>
+                        </span>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="form-text" id="email_help">We'll never share your email with anyone else.</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                        <input type="password" class="form-control" id="password" name="password" required
+                               minlength="6">
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="confirm_password" class="form-label">Confirm Password</label>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                        <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                    </div>
+                </div>
+
+                <div id="parent_info" class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    After registering, you'll be able to create accounts for your children under 13.
+                </div>
+
+                <div id="teen_info" class="alert alert-info d-none">
+                    <i class="fas fa-info-circle me-2"></i>
+                    By creating a teen account, you confirm that you are between 13-17 years old.
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-user-plus me-2"></i>
+                        Create Account
+                    </button>
+                </div>
+            </form>
+
+            <div class="mt-4 text-center">
+                <p class="mb-0">Already have an account? 
+                    <a href="{{ url_for('login') }}" class="text-primary">
+                        Login here
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const accountTypeInput = document.getElementById('account_type_input');
+    const parentInfo = document.getElementById('parent_info');
+    const teenInfo = document.getElementById('teen_info');
+    const emailHelp = document.getElementById('email_help');
+
+    document.querySelectorAll('input[name="account_type"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            accountTypeInput.value = this.value;
+            if (this.value === 'parent') {
+                parentInfo.classList.remove('d-none');
+                teenInfo.classList.add('d-none');
+                emailHelp.textContent = "We'll use this email to manage your children's accounts.";
+            } else {
+                parentInfo.classList.add('d-none');
+                teenInfo.classList.remove('d-none');
+                emailHelp.textContent = "We'll never share your email with anyone else.";
+            }
+        });
+    });
+});
+</script>
+{% endblock %}
