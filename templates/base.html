@@ -35,7 +35,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <a class="navbar-brand" href="{{ url_for('index') }}">
+            <a class="navbar-brand" href="{{ url_for('main.index') }}">
                 <i class="fas fa-gift"></i> Wishlistly
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -44,16 +44,16 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('index') }}">Home</a>
+                        <a class="nav-link" href="{{ url_for('main.index') }}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('demo_page') }}">
+                        <a class="nav-link" href="{{ url_for('demo.demo_page') }}">
                             <i class="fas fa-magic me-1"></i>Try Demo
                         </a>
                     </li>
                     {% if current_user.is_authenticated %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('dashboard') }}">
+                            <a class="nav-link" href="{{ url_for('main.dashboard') }}">
                                 <i class="fas fa-home"></i> Dashboard
                             </a>
                         </li>
@@ -76,7 +76,7 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 <li>
-                                    <a class="dropdown-item" href="{{ url_for('logout') }}">
+                                    <a class="dropdown-item" href="{{ url_for('auth.logout') }}">
                                         <i class="fas fa-sign-out-alt"></i> Logout
                                     </a>
                                 </li>
@@ -84,13 +84,13 @@
                         </li>
                     {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('login') }}">
-                                <i class="fas fa-sign-in-alt"></i> Login
+                            <a class="nav-link" href="{{ url_for('auth.login') }}">
+                                <i class="fas fa-sign-in-alt"></i> Sign In
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('register') }}">
-                                <i class="fas fa-user-plus"></i> Register
+                            <a class="nav-link" href="{{ url_for('auth.register') }}">
+                                <i class="fas fa-user-plus"></i> Create Account
                             </a>
                         </li>
                     {% endif %}
@@ -125,13 +125,12 @@
                         <li><a href="{{ url_for('main.support') }}"><i class="fas fa-heart me-1"></i> Support Us</a></li>
                     </ul>
                 </div>
-                <div class="col-md-3 mb-3">
-                    <h5><i class="fas fa-book"></i> Guides & Help</h5>
+                <div class="col-md-3 mb-4">
+                    <h5>Guides</h5>
                     <ul class="list-unstyled">
-                        <li><a href="{{ url_for('main.parent_guide') }}"><i class="fas fa-user-friends me-1"></i> Parent's Guide</a></li>
-                        <li><a href="{{ url_for('main.child_guide') }}"><i class="fas fa-child me-1"></i> Kid's Guide</a></li>
-                        <li><a href="{{ url_for('main.faq') }}"><i class="fas fa-question-circle me-1"></i> FAQ</a></li>
-                        <li><a href="{{ url_for('main.help') }}"><i class="fas fa-life-ring me-1"></i> Help Center</a></li>
+                        <li><a href="{{ url_for('main.parent_guide') }}">Parent's Guide</a></li>
+                        <li><a href="{{ url_for('main.child_guide') }}">Kid's Guide</a></li>
+                        <li><a href="{{ url_for('main.kids_safety') }}">Safety Guide</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3 mb-3">
@@ -145,8 +144,8 @@
                 <div class="col-md-3 mb-3">
                     <h5><i class="fas fa-bug"></i> Feedback</h5>
                     <ul class="list-unstyled">
-                        <li><a href="{{ url_for('feedback.feedback_form') }}"><i class="fas fa-bug me-1"></i> Report Bug</a></li>
-                        <li><a href="{{ url_for('feedback.feedback_form', type='feature') }}"><i class="fas fa-lightbulb me-1"></i> Request Feature</a></li>
+                        <li><a href="{{ url_for('main.feedback') }}"><i class="fas fa-bug me-1"></i> Report Bug</a></li>
+                        <li><a href="{{ url_for('main.feedback', type='feature') }}"><i class="fas fa-lightbulb me-1"></i> Request Feature</a></li>
                     </ul>
                 </div>
             </div>

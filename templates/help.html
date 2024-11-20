@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}Help Center - Wishlistly{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="display-4 mb-4">Help Center</h1>
+
+    <div class="row mb-5">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-book-open text-primary me-2"></i>Guides
+                    </h5>
+                    <p class="card-text">Check out our comprehensive guides for parents and kids.</p>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <a href="{{ url_for('main.parent_guide') }}" class="text-decoration-none">
+                                <i class="fas fa-chevron-right me-2"></i>Parent's Guide
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('main.child_guide') }}" class="text-decoration-none">
+                                <i class="fas fa-chevron-right me-2"></i>Kid's Guide
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-question-circle text-primary me-2"></i>FAQ
+                    </h5>
+                    <p class="card-text">Find answers to commonly asked questions about using Wishlistly.</p>
+                    <a href="{{ url_for('main.faq') }}" class="btn btn-outline-primary">
+                        View FAQ
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-shield-alt text-primary me-2"></i>Safety
+                    </h5>
+                    <p class="card-text">Learn about our commitment to keeping kids safe online.</p>
+                    <a href="{{ url_for('main.kids_safety') }}" class="btn btn-outline-primary">
+                        Safety Guide
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title h4">
+                        <i class="fas fa-hands-helping text-primary me-2"></i>Need More Help?
+                    </h2>
+                    <p class="card-text">Our support team is here to help you with any questions or concerns.</p>
+                    
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-envelope text-primary me-3 fa-2x"></i>
+                        <div>
+                            <h5 class="mb-1">Email Support</h5>
+                            <p class="mb-0">
+                                <a href="mailto:support@wishlistly.gift">support@wishlistly.gift</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title h4">
+                        <i class="fas fa-comment-dots text-primary me-2"></i>Give Us Feedback
+                    </h2>
+                    <p class="card-text">Help us improve Wishlistly by sharing your thoughts and suggestions.</p>
+                    <a href="{{ url_for('main.feedback') }}" class="btn btn-primary">
+                        Share Feedback
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

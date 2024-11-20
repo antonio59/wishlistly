@@ -1,145 +1,297 @@
 {% extends "base.html" %}
 
-{% block title %}Demo Wishlist - Wishlistly{% endblock %}
+{% block title %}{{ wishlist.title }} - Demo{% endblock %}
 
 {% block content %}
-<div class="container py-4">
-    <div class="wishlist-header mb-4">
-        <h1 class="display-4">
-            <i class="fas fa-gift text-primary me-2"></i>
-            {{ wishlist.title }}
-        </h1>
-        {% if wishlist.description %}
-            <p class="lead text-muted">{{ wishlist.description }}</p>
+{% if wishlist.theme == 'birthday_sparkly' %}
+<div class="sparkly-background"></div>
+{% endif %}
+
+<div class="container py-5 {% if wishlist.theme == 'birthday_sparkly' %}birthday-sparkly-theme{% endif %}">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('demo.demo_page') }}">Demo</a></li>
+            <li class="breadcrumb-item active">{{ wishlist.title }}</li>
+        </ol>
+    </nav>
+
+    <div class="wishlist-header mb-4 {% if wishlist.theme == 'birthday_sparkly' %}birthday-header{% endif %}">
+        {% if wishlist.theme == 'birthday_sparkly' %}
+        <div class="birthday-decorations">
+            <div class="balloon left"></div>
+            <div class="balloon right"></div>
+            <div class="confetti"></div>
+        </div>
         {% endif %}
-        
-        {% if wishlist.occasion %}
-            <div class="occasion-badge mb-3">
-                {% if wishlist.occasion == 'birthday' %}
-                    <i class="fas fa-birthday-cake me-2"></i>Birthday Wishlist
-                    {% if wishlist.turning_age %}
-                        <span class="ms-2">(Turning {{ wishlist.turning_age }})</span>
-                    {% endif %}
-                {% elif wishlist.occasion == 'christmas' %}
-                    <i class="fas fa-tree me-2"></i>Christmas Wishlist
-                {% elif wishlist.occasion == 'graduation' %}
-                    <i class="fas fa-graduation-cap me-2"></i>Graduation Wishlist
-                    {% if wishlist.school_name %}
-                        <span class="ms-2">({{ wishlist.school_name }})</span>
-                    {% endif %}
-                {% endif %}
-            </div>
-        {% endif %}
-        
-        <div class="wishlist-actions">
-            <button class="btn btn-primary" onclick="showSignupPrompt()">
-                <i class="fas fa-plus-circle me-2"></i>Add Item
-            </button>
-            <button class="btn btn-outline-primary" onclick="showSignupPrompt()">
-                <i class="fas fa-edit me-2"></i>Edit Wishlist
-            </button>
-            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#shareModal">
-                <i class="fas fa-share-alt me-2"></i>Share
-            </button>
+        <h1 class="display-4">{{ wishlist.title }}</h1>
+        <p class="lead">{{ wishlist.description }}</p>
+        <div class="badges">
+            <span class="badge {% if wishlist.theme == 'birthday_sparkly' %}bg-pink{% else %}bg-primary{% endif %} me-2">
+                <i class="fas fa-gift me-1"></i>{{ wishlist.occasion|title }}
+            </span>
+            <span class="badge {% if wishlist.theme == 'birthday_sparkly' %}bg-purple{% else %}bg-info{% endif %}">
+                <i class="fas fa-palette me-1"></i>{{ wishlist.theme|replace('_', ' ')|title }}
+            </span>
         </div>
     </div>
 
-    <div class="row">
-        {% if wishlist.items %}
-            {% for item in wishlist.items %}
-                <div class="col-md-6 col-lg-4 mb-4">
-                    <div class="card h-100 wishlist-item">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <h3 class="wishlist-item-title">{{ item.name }}</h3>
-                                <div class="dropdown">
-                                    <button class="btn btn-link text-muted" type="button" onclick="showSignupPrompt()">
-                                        <i class="fas fa-ellipsis-v"></i>
-                                    </button>
-                                </div>
-                            </div>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for item in wishlist.items %}
+        <div class="col" data-item-id="{{ item.id }}">
+            <div class="card h-100 {% if wishlist.theme == 'birthday_sparkly' %}birthday-card{% endif %}">
+                {% if item.image_url %}
+                <img src="{{ item.image_url }}" class="card-img-top" alt="{{ item.name }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.name }}</h5>
+                    <p class="card-text">{{ item.description }}</p>
+                    <div class="price-tag mb-2">${{ "%.2f"|format(item.price) }}</div>
+                    
+                    {% set priority_colors = {
+                        'Must Have': 'danger',
+                        'Would Love': 'warning',
+                        'Nice to Have': 'info'
+                    } %}
+                    {% if wishlist.theme == 'birthday_sparkly' %}
+                        {% set priority_colors = {
+                            'Must Have': 'pink',
+                            'Would Love': 'purple',
+                            'Nice to Have': 'teal'
+                        } %}
+                    {% endif %}
+                    <span class="badge bg-{{ priority_colors[item.priority] }} mb-2">
+                        {{ item.priority }}
+                    </span>
 
-                            {% if item.description %}
-                                <p class="wishlist-item-description">{{ item.description }}</p>
-                            {% endif %}
-
-                            <div class="wishlist-item-details">
-                                {% if item.price %}
-                                    <div class="price-badge">
-                                        <i class="fas fa-tag me-1"></i>${{ "%.2f"|format(item.price) }}
-                                    </div>
-                                {% endif %}
-
-                                <div class="priority-badge priority-{{ item.priority }}">
-                                    <i class="fas fa-star me-1"></i>{{ item.priority|title }} Priority
-                                </div>
-
-                                {% if item.purchased %}
-                                    <div class="purchased-badge">
-                                        <i class="fas fa-check-circle me-1"></i>Purchased
-                                        {% if item.purchased_by %}
-                                            by {{ item.purchased_by }}
-                                        {% endif %}
-                                    </div>
+                    <div class="purchase-status-area mb-2">
+                        {% if item.purchased %}
+                            <div class="purchased-badge text-success mb-2">
+                                <i class="fas fa-check-circle me-1"></i>Purchased
+                                {% if item.purchased_by %}
+                                    by {{ item.purchased_by }}
                                 {% endif %}
                             </div>
-
-                            {% if item.url %}
-                                <div class="mt-3">
-                                    <a href="{{ item.url }}" target="_blank" class="btn btn-outline-primary btn-sm w-100">
-                                        <i class="fas fa-external-link-alt me-2"></i>View Item
-                                    </a>
-                                </div>
+                            {% if item.session_purchase %}
+                            <button class="btn btn-outline-secondary btn-sm w-100" onclick="undoPurchase('{{ item.id }}')">
+                                <i class="fas fa-undo me-1"></i>Undo Purchase
+                            </button>
                             {% endif %}
-                        </div>
+                        {% else %}
+                            <div class="purchase-actions">
+                                <button class="btn {% if wishlist.theme == 'birthday_sparkly' %}btn-pink{% else %}btn-outline-success{% endif %} btn-sm w-100" onclick="markAsPurchased('{{ item.id }}')">
+                                    <i class="fas fa-gift me-1"></i>Mark as Purchased
+                                </button>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
-            {% endfor %}
-        {% else %}
-            <div class="col-12">
-                <div class="empty-state">
-                    <div class="empty-state-icon">
-                        <i class="fas fa-gift"></i>
-                    </div>
-                    <h2>No Items Yet!</h2>
-                    <p class="text-muted">Create an account to start adding items to your wishlist!</p>
-                    <a href="{{ url_for('register') }}" class="btn btn-primary">
-                        <i class="fas fa-user-plus me-2"></i>Sign Up Now
+                <div class="card-footer bg-transparent">
+                    {% if item.url %}
+                    <a href="{{ item.url }}" target="_blank" class="btn {% if wishlist.theme == 'birthday_sparkly' %}btn-purple{% else %}btn-primary{% endif %} w-100">
+                        <i class="fas fa-external-link-alt me-2"></i>View Item
                     </a>
+                    {% endif %}
                 </div>
             </div>
-        {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="mt-5 text-center">
+        <p class="lead">Want to create your own wishlist?</p>
+        <a href="{{ url_for('auth.register') }}" class="btn {% if wishlist.theme == 'birthday_sparkly' %}btn-pink{% else %}btn-success{% endif %} btn-lg">
+            <i class="fas fa-user-plus me-2"></i>Create Account
+        </a>
     </div>
 </div>
 
-<!-- Share Modal -->
-<div class="modal fade" id="shareModal" tabindex="-1">
+<!-- Purchase Modal -->
+<div class="modal fade" id="purchaseModal" tabindex="-1" aria-labelledby="purchaseModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Share Demo Wishlist</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <h5 class="modal-title" id="purchaseModalLabel">Mark Item as Purchased</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="mb-3">
-                    <label class="form-label">Wishlist Link</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control" id="wishlistUrl" readonly
-                               value="{{ url_for('view_demo_wishlist', wishlist_id=wishlist.id, _external=True) }}">
-                        <button class="btn btn-outline-primary" onclick="copyWishlistUrl()">
-                            <i class="fas fa-copy"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="d-grid">
-                    <button class="btn btn-primary" onclick="shareWishlist()">
-                        <i class="fas fa-share-alt me-2"></i>Share
-                    </button>
-                </div>
+                <p>Please enter your name to mark this item as purchased:</p>
+                <input type="text" id="purchaserName" class="form-control" placeholder="Your Name">
+                <input type="hidden" id="currentItemId">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" onclick="confirmPurchase()">Confirm Purchase</button>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+let purchaseModal;
+const sessionPurchases = new Map();
+
+document.addEventListener('DOMContentLoaded', function() {
+    purchaseModal = new bootstrap.Modal(document.getElementById('purchaseModal'));
+    
+    // Load any existing session purchases from localStorage
+    try {
+        const savedPurchases = JSON.parse(localStorage.getItem('demoWishlistPurchases') || '{}');
+        Object.entries(savedPurchases).forEach(([itemId, purchaseInfo]) => {
+            sessionPurchases.set(itemId, purchaseInfo);
+            updateItemDisplay(itemId, purchaseInfo);
+        });
+    } catch (e) {
+        console.error('Error loading session purchases:', e);
+    }
+});
+
+function markAsPurchased(itemId) {
+    document.getElementById('currentItemId').value = itemId;
+    document.getElementById('purchaserName').value = '';
+    purchaseModal.show();
+}
+
+function confirmPurchase() {
+    const purchaserName = document.getElementById('purchaserName').value.trim();
+    const itemId = document.getElementById('currentItemId').value;
+    
+    if (!purchaserName) {
+        alert('Please enter your name');
+        return;
+    }
+
+    const purchaseInfo = {
+        purchased: true,
+        purchasedBy: purchaserName,
+        timestamp: Date.now()
+    };
+
+    // Store in session
+    sessionPurchases.set(itemId, purchaseInfo);
+    saveSessionPurchases();
+
+    // Update display
+    updateItemDisplay(itemId, purchaseInfo);
+
+    // Close the modal
+    purchaseModal.hide();
+}
+
+function undoPurchase(itemId) {
+    // Remove from session
+    sessionPurchases.delete(itemId);
+    saveSessionPurchases();
+
+    // Update display
+    const purchaseStatusArea = document.querySelector(`[data-item-id="${itemId}"] .purchase-status-area`);
+    purchaseStatusArea.innerHTML = `
+        <div class="purchase-actions">
+            <button class="btn {% if wishlist.theme == 'birthday_sparkly' %}btn-pink{% else %}btn-outline-success{% endif %} btn-sm w-100" onclick="markAsPurchased('${itemId}')">
+                <i class="fas fa-gift me-1"></i>Mark as Purchased
+            </button>
+        </div>
+    `;
+}
+
+function updateItemDisplay(itemId, purchaseInfo) {
+    const purchaseStatusArea = document.querySelector(`[data-item-id="${itemId}"] .purchase-status-area`);
+    if (purchaseStatusArea) {
+        purchaseStatusArea.innerHTML = `
+            <div class="purchased-badge text-success mb-2">
+                <i class="fas fa-check-circle me-1"></i>Purchased by ${purchaseInfo.purchasedBy}
+            </div>
+            <button class="btn btn-outline-secondary btn-sm w-100" onclick="undoPurchase('${itemId}')">
+                <i class="fas fa-undo me-1"></i>Undo Purchase
+            </button>
+        `;
+    }
+}
+
+function saveSessionPurchases() {
+    // Convert Map to object for storage
+    const purchasesObj = Object.fromEntries(sessionPurchases);
+    localStorage.setItem('demoWishlistPurchases', JSON.stringify(purchasesObj));
+}
+</script>
+
+<style>
+.sparkly-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://example.com/sparkly-background.png');
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+}
+
+.birthday-sparkly-theme {
+    background-color: #f7f7f7;
+}
+
+.birthday-header {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.birthday-decorations {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.balloon {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #ff69b4;
+}
+
+.left {
+    top: 20%;
+    left: 20%;
+}
+
+.right {
+    top: 20%;
+    right: 20%;
+}
+
+.confetti {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    background-image: url('https://example.com/confetti.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.birthday-card {
+    border: 1px solid #ddd;
+    border-radius: 1rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.btn-pink {
+    background-color: #ff69b4;
+    color: #fff;
+    border-color: #ff69b4;
+}
+
+.btn-purple {
+    background-color: #7a288a;
+    color: #fff;
+    border-color: #7a288a;
+}
+</style>
 {% endblock %}
 
 {% block styles %}
@@ -282,6 +434,13 @@ function shareWishlist() {
         .catch(console.error);
     } else {
         copyWishlistUrl();
+    }
+}
+</script>
+<script>
+function showSignupPrompt() {
+    if (confirm('To mark items as purchased, you need to create an account. Would you like to sign up now?')) {
+        window.location.href = "{{ url_for('auth.register') }}";
     }
 }
 </script>

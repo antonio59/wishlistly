@@ -603,3 +603,240 @@ body {
         gap: 1rem;
     }
 }
+
+/* Birthday Sparkly Theme */
+.birthday-sparkly-theme {
+    background-color: #fef6ff;
+    position: relative;
+    overflow: hidden;
+}
+
+.sparkly-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #fef6ff 25%, #fff1fd 25%, #fff1fd 50%, #fef6ff 50%, #fef6ff 75%, #fff1fd 75%, #fff1fd);
+    background-size: 20px 20px;
+    opacity: 0.5;
+    z-index: -1;
+    animation: sparkle 10s linear infinite;
+}
+
+@keyframes sparkle {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 40px 40px;
+    }
+}
+
+.birthday-header {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 2rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.birthday-header h1 {
+    color: #ff69b4;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.birthday-decorations {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.balloon {
+    position: absolute;
+    width: 60px;
+    height: 80px;
+    border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+}
+
+.balloon::before {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 20px;
+    background: #ff69b4;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.balloon.left {
+    background: linear-gradient(135deg, #ff69b4, #ff8cc6);
+    left: 10%;
+    top: -20px;
+    animation-delay: -1s;
+}
+
+.balloon.right {
+    background: linear-gradient(135deg, #7a288a, #9932cc);
+    right: 10%;
+    top: -30px;
+    animation-delay: -2s;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+.confetti {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.confetti::before {
+    content: '✨';
+    position: absolute;
+    animation: confetti-fall 3s linear infinite;
+    font-size: 20px;
+    color: #ff69b4;
+}
+
+@keyframes confetti-fall {
+    0% {
+        transform: translateY(-100%) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+.birthday-card {
+    background-color: rgba(255, 255, 255, 0.95);
+    border: none;
+    border-radius: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+}
+
+.birthday-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.birthday-card .card-img-top {
+    border-top-left-radius: 1.5rem;
+    border-top-right-radius: 1.5rem;
+}
+
+.birthday-card .card-body {
+    padding: 1.5rem;
+}
+
+.birthday-card .card-title {
+    color: #7a288a;
+    font-weight: bold;
+}
+
+.birthday-card .card-text {
+    color: #666;
+}
+
+.birthday-card .price-tag {
+    color: #ff69b4;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+/* Theme-specific button styles */
+.btn-pink {
+    background-color: #ff69b4;
+    border-color: #ff69b4;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-pink:hover {
+    background-color: #ff8cc6;
+    border-color: #ff8cc6;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(255, 105, 180, 0.3);
+}
+
+.btn-purple {
+    background-color: #7a288a;
+    border-color: #7a288a;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-purple:hover {
+    background-color: #9932cc;
+    border-color: #9932cc;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(122, 40, 138, 0.3);
+}
+
+/* Badge styles */
+.bg-pink {
+    background-color: #ff69b4 !important;
+}
+
+.bg-purple {
+    background-color: #7a288a !important;
+}
+
+.bg-teal {
+    background-color: #20b2aa !important;
+}
+
+/* Purchase status styles */
+.purchase-status-area {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 1rem;
+    border-radius: 1rem;
+    margin: 1rem 0;
+}
+
+.purchased-badge {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    font-weight: 500;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .birthday-header {
+        padding: 1.5rem;
+    }
+    
+    .balloon {
+        width: 40px;
+        height: 60px;
+    }
+    
+    .birthday-card {
+        margin-bottom: 1rem;
+    }
+}

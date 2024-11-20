@@ -14,114 +14,48 @@
                     </h1>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ url_for('create_wishlist') }}" id="create-wishlist-form">
+                    <form method="POST" action="{{ url_for('wishlist.create_wishlist') }}" id="create-wishlist-form">
+                        {{ form.csrf_token }}
                         <div class="mb-3">
-                            <label for="title" class="form-label">Wishlist Title</label>
-                            <input type="text" class="form-control" id="title" name="title" required
-                                   placeholder="My Awesome Wishlist">
+                            {{ form.name.label(class="form-label") }}
+                            {{ form.name(class="form-control", placeholder="My Awesome Wishlist") }}
                             <div class="form-text">Give your wishlist a fun name!</div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="description" class="form-label">Description</label>
-                            <textarea class="form-control" id="description" name="description" rows="3"
-                                    placeholder="What's this wishlist for?"></textarea>
+                            {{ form.description.label(class="form-label") }}
+                            {{ form.description(class="form-control", rows="3", placeholder="What's this wishlist for?") }}
                             <div class="form-text">Add a short description (optional)</div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="occasion" class="form-label">What's the Occasion? 🎉</label>
-                            <select class="form-select" id="occasion" name="occasion" required>
-                                <option value="" disabled selected>Choose an occasion...</option>
-                                {% for occasion in occasions %}
-                                <option value="{{ occasion.id }}">
-                                    {{ occasion.name }}
-                                </option>
-                                {% endfor %}
-                            </select>
+                            {{ form.occasion.label(class="form-label") }}
+                            {{ form.occasion(class="form-select") }}
                         </div>
 
-                        <!-- Birthday Details Section -->
-                        <div id="birthday_details" class="occasion-details mb-3 d-none">
-                            <div class="card bg-light">
-                                <div class="card-body">
-                                    <h3 class="h6 mb-3">
-                                        <i class="fas fa-birthday-cake me-2"></i>
-                                        Birthday Details
-                                    </h3>
-                                    <div class="mb-3">
-                                        <label for="birthday_date" class="form-label">When's the birthday?</label>
-                                        <input type="date" class="form-control" id="birthday_date" name="birthday_date">
-                                    </div>
-                                    <div class="mb-0">
-                                        <label for="turning_age" class="form-label">Turning Age</label>
-                                        <input type="number" class="form-control" id="turning_age" name="turning_age"
-                                               min="1" max="100" placeholder="How old will you be?">
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="mb-3">
+                            {{ form.event_date.label(class="form-label") }}
+                            {{ form.event_date(class="form-control") }}
                         </div>
 
-                        <!-- Graduation Details Section -->
-                        <div id="graduation_details" class="occasion-details mb-3 d-none">
-                            <div class="card bg-light">
-                                <div class="card-body">
-                                    <h3 class="h6 mb-3">
-                                        <i class="fas fa-graduation-cap me-2"></i>
-                                        Graduation Details
-                                    </h3>
-                                    <div class="mb-3">
-                                        <label for="graduation_date" class="form-label">Graduation Date</label>
-                                        <input type="date" class="form-control" id="graduation_date" name="graduation_date">
-                                    </div>
-                                    <div class="mb-0">
-                                        <label for="school_name" class="form-label">School Name</label>
-                                        <input type="text" class="form-control" id="school_name" name="school_name"
-                                               placeholder="Name of your school">
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="mb-3">
+                            {{ form.theme.label(class="form-label") }}
+                            {{ form.theme(class="form-select") }}
                         </div>
 
-                        <div class="mb-4">
-                            <label for="theme" class="form-label">Choose a Theme</label>
-                            <select class="form-select" id="theme" name="theme" required>
-                                <option value="" disabled selected>Select a theme...</option>
-                                {% for theme_id, theme in themes.items() %}
-                                <option value="{{ theme_id }}" 
-                                        data-icon="{{ theme.icon }}"
-                                        data-occasions="{{ ','.join(theme.occasions) }}"
-                                        data-color-scheme="{{ theme.accent_color }}"
-                                        data-background="{{ theme.background }}">
-                                    {{ theme.title }} - {{ theme.description }}
-                                </option>
-                                {% endfor %}
-                            </select>
-                        </div>
-
-                        <div id="theme_preview" class="mb-4 d-none">
-                            <h3 class="h6 mb-2">Theme Preview</h3>
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center">
-                                        <i id="theme_icon" class="fas fa-2x me-3"></i>
-                                        <div>
-                                            <h4 id="theme_name" class="h6 mb-1"></h4>
-                                            <p id="theme_description" class="small text-muted mb-0"></p>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                {{ form.is_public(class="form-check-input") }}
+                                {{ form.is_public.label(class="form-check-label") }}
                             </div>
                         </div>
 
                         <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary create-btn">
-                                <i class="fas fa-plus-circle me-2"></i>
-                                Create Wishlist
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i>Create Wishlist
                             </button>
-                            <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary">
-                                <i class="fas fa-arrow-left me-2"></i>
-                                Back to Dashboard
+                            <a href="{{ url_for('main.dashboard') }}" class="btn btn-outline-secondary">
+                                <i class="fas fa-times me-2"></i>Cancel
                             </a>
                         </div>
                     </form>
@@ -135,74 +69,7 @@
 {% block extra_js %}
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const themeSelect = document.getElementById('theme');
-    const themePreview = document.getElementById('theme_preview');
-    const themeIcon = document.getElementById('theme_icon');
-    const themeName = document.getElementById('theme_name');
-    const themeDescription = document.getElementById('theme_description');
-    const occasionSelect = document.getElementById('occasion');
-    
-    // Handle theme selection
-    themeSelect.addEventListener('change', function() {
-        const selectedOption = this.options[this.selectedIndex];
-        const icon = selectedOption.getAttribute('data-icon');
-        const [name, description] = selectedOption.text.split(' - ');
-        
-        themeIcon.className = `fas ${icon} fa-2x me-3`;
-        themeName.textContent = name;
-        themeDescription.textContent = description;
-        themePreview.classList.remove('d-none');
-    });
-
-    // Filter themes based on selected occasion
-    occasionSelect.addEventListener('change', function() {
-        const selectedOccasion = this.value;
-        
-        // Hide all occasion details sections
-        document.querySelectorAll('.occasion-details').forEach(section => {
-            section.classList.add('d-none');
-            
-            // Clear inputs when hiding
-            section.querySelectorAll('input').forEach(input => {
-                input.value = '';
-                input.required = false;
-            });
-        });
-        
-        // Show selected occasion details
-        if (selectedOccasion === 'birthday') {
-            const birthdayDetails = document.getElementById('birthday_details');
-            birthdayDetails.classList.remove('d-none');
-            birthdayDetails.querySelectorAll('input').forEach(input => {
-                input.required = true;
-            });
-        } else if (selectedOccasion === 'graduation') {
-            const graduationDetails = document.getElementById('graduation_details');
-            graduationDetails.classList.remove('d-none');
-            graduationDetails.querySelectorAll('input').forEach(input => {
-                input.required = true;
-            });
-        }
-
-        // Filter theme options based on occasion
-        Array.from(themeSelect.options).forEach(option => {
-            if (option.value === '') return; // Skip placeholder option
-            
-            const occasions = option.getAttribute('data-occasions').split(',');
-            if (occasions.includes(selectedOccasion)) {
-                option.style.display = '';
-            } else {
-                option.style.display = 'none';
-            }
-        });
-
-        // Reset theme selection if current theme doesn't match occasion
-        const currentThemeOption = themeSelect.options[themeSelect.selectedIndex];
-        if (currentThemeOption && currentThemeOption.style.display === 'none') {
-            themeSelect.value = '';
-            themePreview.classList.add('d-none');
-        }
-    });
+    // Add any JavaScript needed for form interactivity here
 });
 </script>
 {% endblock %}

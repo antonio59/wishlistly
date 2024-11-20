@@ -12,18 +12,38 @@ import string
 import re
 from themes import OCCASIONS, WISHLIST_THEMES, get_themes_by_occasion, get_theme_by_id
 from demo import get_demo_wishlists, DemoWishlist
-from models import db
-from routes import init_app as init_routes
+from models import db, User
+from models.wishlist import Wishlist, WishlistItem
+from models.activity import Activity
+from routes.main import main
+from routes.demo import demo
+from routes.auth import auth
+from routes.wishlist import wishlist
+from utils.email import mail
+from utils.filters import timeago
 
 load_dotenv()
 
 app = Flask(__name__)
 
 # Basic configuration
-app.config['SECRET_KEY'] = 'your-secret-key-here'
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'your-dev-secret-key-please-change-in-production')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/antoniosmith/CascadeProjects/kidswishlist/instance/kidswishlist.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True  # Enable SQL logging
+
+# Email configuration
+app.config['MAIL_SERVER'] = os.getenv('MAIL_SERVER', 'smtp.gmail.com')
+app.config['MAIL_PORT'] = int(os.getenv('MAIL_PORT', 587))
+app.config['MAIL_USE_TLS'] = os.getenv('MAIL_USE_TLS', 'true').lower() == 'true'
+app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
+app.config['MAIL_DEFAULT_SENDER'] = os.getenv('MAIL_DEFAULT_SENDER', 'noreply@wishlistly.com')
+
+# Google OAuth configuration
+app.config['GOOGLE_CLIENT_ID'] = os.getenv('GOOGLE_CLIENT_ID')
+app.config['GOOGLE_CLIENT_SECRET'] = os.getenv('GOOGLE_CLIENT_SECRET')
+app.config['GOOGLE_DISCOVERY_URL'] = 'https://accounts.google.com/.well-known/openid-configuration'
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -38,22 +58,32 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
 
 # Initialize extensions
 db.init_app(app)
-init_routes(app)
-migrate = Migrate(app, db)
+mail.init_app(app)
 
 # Initialize login manager
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view = 'login'
+login_manager.login_view = 'auth.login'
 login_manager.login_message_category = 'info'
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+# Register blueprints
+app.register_blueprint(main)
+app.register_blueprint(demo)
+app.register_blueprint(auth)
+app.register_blueprint(wishlist, url_prefix='/wishlist')
+
+migrate = Migrate(app, db)
+
 @app.context_processor
 def utility_processor():
     return {'now': datetime.now()}
+
+# Register custom filters
+app.jinja_env.filters['timeago'] = timeago
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -84,7 +114,7 @@ def index():
         if current_user.is_parent:
             return redirect(url_for('parent_dashboard'))
         return redirect(url_for('dashboard'))
-    return render_template('index.html')
+    return redirect(url_for('main.index'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -100,101 +130,54 @@ def login():
         user = User.query.filter_by(username=username).first()
         if user and user.check_password(password):
             login_user(user)
+            user.last_login = datetime.utcnow()
+            db.session.commit()
             
-            # Create welcome activity if this is their first login
-            if not Activity.query.filter_by(user_id=user.id).first():
-                activity = Activity(
-                    user_id=user.id,
-                    activity_type="LOGIN",
-                    message=f"Welcome to Kids Wishlist! Account created as {'parent' if user.is_parent else 'child'}.",
-                    emoji="👋"
-                )
-                db.session.add(activity)
-                db.session.commit()
-            
-            # Redirect based on account type
             if user.is_parent:
                 return redirect(url_for('parent_dashboard'))
             return redirect(url_for('dashboard'))
-            
+        
         flash('Invalid username or password', 'danger')
     return render_template('login.html')
 
 @app.route('/dashboard')
 @login_required
 def dashboard():
-    # If user is a parent and not viewing as child, redirect to parent dashboard
-    if current_user.is_parent and 'parent_id' not in session:
+    if current_user.is_parent:
         return redirect(url_for('parent_dashboard'))
     
-    # Get user's wishlists
     wishlists = Wishlist.query.filter_by(user_id=current_user.id).all()
+    activities = Activity.query.filter_by(user_id=current_user.id).order_by(Activity.created_at.desc()).limit(10).all()
     
-    # Get recent activities
-    activities = Activity.query.filter_by(user_id=current_user.id)\
-        .order_by(Activity.timestamp.desc())\
-        .limit(5)\
-        .all()
-    
-    return render_template('dashboard.html', 
-                         wishlists=wishlists,
-                         activities=activities)
+    return render_template('dashboard.html', wishlists=wishlists, activities=activities)
 
-@app.route('/parent_dashboard')
+@app.route('/parent-dashboard')
 @login_required
 def parent_dashboard():
-    # Check if user is a parent
     if not current_user.is_parent:
-        flash('Access denied. This page is only for parent accounts.', 'danger')
         return redirect(url_for('dashboard'))
     
-    # Check if parent is viewing as child
-    if 'parent_id' in session:
-        flash('Please switch back to your parent account first.', 'warning')
-        return redirect(url_for('dashboard'))
-    
-    # Get all children associated with this parent
     children = User.query.filter_by(parent_id=current_user.id).all()
+    child_activities = []
     
-    # Prepare data for each child
-    children_data = []
     for child in children:
-        wishlists = Wishlist.query.filter_by(user_id=child.id).all()
-        total_items = sum(len(wishlist.items.all()) for wishlist in wishlists)
-        activities = Activity.query.filter_by(user_id=child.id)\
-            .order_by(Activity.timestamp.desc())\
-            .limit(5)\
-            .all()
-        
-        children_data.append({
-            'child': child,
-            'wishlists': wishlists,
-            'total_items': total_items,
-            'activities': activities
-        })
+        activities = Activity.query.filter_by(user_id=child.id).order_by(Activity.created_at.desc()).limit(5).all()
+        child_activities.extend(activities)
     
-    # Get all activities across children for the activity feed
-    all_activities = []
-    for child in children:
-        child_activities = Activity.query.filter_by(user_id=child.id)\
-            .order_by(Activity.timestamp.desc())\
-            .limit(5)\
-            .all()
-        all_activities.extend(child_activities)
+    # Sort all activities by timestamp
+    child_activities.sort(key=lambda x: x.created_at, reverse=True)
     
-    # Sort activities by timestamp
-    all_activities.sort(key=lambda x: x.timestamp, reverse=True)
+    # Get only the 10 most recent activities
+    child_activities = child_activities[:10]
     
-    return render_template('parent_dashboard.html', 
-                         children_data=children_data,
-                         activities=all_activities[:10])
+    return render_template('parent_dashboard.html', children=children, activities=child_activities)
 
 @app.route('/switch_to_child/<int:child_id>')
 @login_required
 def switch_to_child(child_id):
     if not current_user.is_parent:
         flash('Access denied. Only parent accounts can switch to child views.', 'danger')
-        return redirect(url_for('dashboard'))
+        return redirect(url_for('parent_dashboard'))
     
     child = User.query.get_or_404(child_id)
     if child.parent_id != current_user.id:
@@ -244,7 +227,7 @@ def get_latest_activities():
     
     for child_id in children_ids:
         child_activities = Activity.query.filter_by(user_id=child_id)\
-            .order_by(Activity.timestamp.desc())\
+            .order_by(Activity.created_at.desc())\
             .limit(5)\
             .all()
         
@@ -252,7 +235,7 @@ def get_latest_activities():
             'child_id': activity.user_id,
             'message': activity.message,
             'emoji': activity.emoji,
-            'timestamp': activity.timestamp.isoformat()
+            'timestamp': activity.created_at.isoformat()
         } for activity in child_activities])
     
     return jsonify(activities)
@@ -964,25 +947,6 @@ def flush_data():
         db.session.rollback()
     
     return redirect(url_for('index'))
-
-@app.route('/demo')
-def demo_page():
-    """Demo page showcasing different wishlist themes and features."""
-    demo_wishlists = get_demo_wishlists()
-    return render_template('demo.html', demo_wishlists=demo_wishlists)
-
-@app.route('/demo/<wishlist_id>')
-def view_demo_wishlist(wishlist_id):
-    """View a demo wishlist."""
-    demo_wishlists = get_demo_wishlists()
-    if wishlist_id not in demo_wishlists:
-        flash('Demo wishlist not found!', 'error')
-        return redirect(url_for('demo_page'))
-    
-    wishlist = DemoWishlist(demo_wishlists[wishlist_id])
-    
-    return render_template('view_demo_wishlist.html', 
-                         wishlist=wishlist)
 
 if __name__ == '__main__':
     print("Starting server on http://localhost:3000")

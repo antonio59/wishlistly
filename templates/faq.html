@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block title %}FAQ - Wishlistly{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mb-4">Frequently Asked Questions</h1>
+            
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="accordion" id="faqAccordion">
+                        <!-- General Questions -->
+                        <div class="mb-4">
+                            <h3>General Questions</h3>
+                            
+                            <div class="accordion-item">
+                                <h4 class="accordion-header" id="general1">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#generalCollapse1">
+                                        What is Wishlistly?
+                                    </button>
+                                </h4>
+                                <div id="generalCollapse1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        Wishlistly is a safe and fun platform for kids to create and manage their wishlists while being supervised by their parents. It helps families organize gift-giving occasions and teaches children about prioritizing and managing their wishes.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <h4 class="accordion-header" id="general2">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#generalCollapse2">
+                                        Is Wishlistly free to use?
+                                    </button>
+                                </h4>
+                                <div id="generalCollapse2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        Yes, Wishlistly is completely free to use! We believe in making wishlist management accessible to all families.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Parent Questions -->
+                        <div class="mb-4">
+                            <h3>For Parents</h3>
+                            
+                            <div class="accordion-item">
+                                <h4 class="accordion-header" id="parent1">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#parentCollapse1">
+                                        How do I monitor my child's wishlist?
+                                    </button>
+                                </h4>
+                                <div id="parentCollapse1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        As a parent, you have full visibility of your children's wishlists through your dashboard. You can view, approve, or suggest modifications to items they add.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <h4 class="accordion-header" id="parent2">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#parentCollapse2">
+                                        How do I add my child to my account?
+                                    </button>
+                                </h4>
+                                <div id="parentCollapse2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        After logging in to your parent account, click on the "Add Child" button in the navigation bar. Fill in your child's details and create their account. They'll receive their own login credentials.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Child Questions -->
+                        <div class="mb-4">
+                            <h3>For Kids</h3>
+                            
+                            <div class="accordion-item">
+                                <h4 class="accordion-header" id="child1">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#childCollapse1">
+                                        How do I add items to my wishlist?
+                                    </button>
+                                </h4>
+                                <div id="childCollapse1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        Once you're logged in, go to your dashboard and click "Create Wishlist" or "Add Item" to an existing wishlist. Fill in the details about what you want, and don't forget to add a picture if you can find one!
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <h4 class="accordion-header" id="child2">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#childCollapse2">
+                                        Can I have multiple wishlists?
+                                    </button>
+                                </h4>
+                                <div id="childCollapse2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        Yes! You can create different wishlists for different occasions like birthdays, holidays, or just things you'd like to save for later.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Safety & Privacy -->
+                        <div class="mb-4">
+                            <h3>Safety & Privacy</h3>
+                            
+                            <div class="accordion-item">
+                                <h4 class="accordion-header" id="safety1">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#safetyCollapse1">
+                                        Is my child's information safe?
+                                    </button>
+                                </h4>
+                                <div id="safetyCollapse1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        Yes, we take privacy very seriously. All personal information is encrypted, and wishlists are only visible to approved family members and friends. Parents have full control over privacy settings.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <h4 class="accordion-header" id="safety2">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#safetyCollapse2">
+                                        Who can see my child's wishlist?
+                                    </button>
+                                </h4>
+                                <div id="safetyCollapse2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        By default, wishlists are private and only visible to parents. Parents can choose to share wishlists with specific family members or friends using secure sharing links.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

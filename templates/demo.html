@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <div class="card-footer bg-transparent border-0">
-                    <a href="{{ url_for('view_demo_wishlist', wishlist_id=occasion) }}" 
+                    <a href="{{ url_for('demo.view_demo_wishlist', wishlist_id=occasion) }}" 
                        class="btn btn-primary w-100">
                         <i class="fas fa-eye me-2"></i>View Wishlist
                     </a>
@@ -46,7 +46,7 @@
                 <div class="card-body">
                     <h3>Ready to create your own wishlist?</h3>
                     <p class="mb-4">Sign up now to create beautiful wishlists for any occasion!</p>
-                    <a href="{{ url_for('register') }}" class="btn btn-success btn-lg">
+                    <a href="{{ url_for('auth.register') }}" class="btn btn-success btn-lg">
                         <i class="fas fa-user-plus me-2"></i>Create Account
                     </a>
                 </div>

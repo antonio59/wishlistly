@@ -1,10 +1,19 @@
-from flask import Blueprint, render_template
-from flask_login import current_user
+from flask import Blueprint, render_template, redirect, url_for, flash, request, session
+from flask_login import current_user, login_required
+from models.user import User
+from models.wishlist import Wishlist
+from models.activity import Activity
+from models.db import db
+from datetime import datetime
 
 main = Blueprint('main', __name__)
 
 @main.route('/')
 def index():
+    if current_user.is_authenticated:
+        if current_user.is_parent:
+            return redirect(url_for('parent_dashboard'))
+        return redirect(url_for('dashboard'))
     return render_template('index.html')
 
 @main.route('/about')
@@ -15,13 +24,22 @@ def about():
 def contact():
     return render_template('contact.html')
 
-@main.route('/parent-guide')
-def parent_guide():
-    return render_template('guides/parent_guide.html')
+@main.route('/support')
+def support():
+    return render_template('support.html')
 
-@main.route('/kid-guide')
-def child_guide():
-    return render_template('guides/child_guide.html')
+@main.route('/kids-safety')
+def kids_safety():
+    return render_template('kids_safety.html')
+
+@main.route('/feedback', methods=['GET', 'POST'])
+def feedback():
+    if request.method == 'POST':
+        feedback_text = request.form.get('feedback')
+        if feedback_text:
+            flash('Thank you for your feedback!', 'success')
+            return redirect(url_for('main.index'))
+    return render_template('feedback_form.html')
 
 @main.route('/faq')
 def faq():
@@ -31,6 +49,7 @@ def faq():
 def help():
     return render_template('help.html')
 
+# Legal routes
 @main.route('/privacy')
 def privacy_policy():
     return render_template('legal/privacy_policy.html')
@@ -39,11 +58,15 @@ def privacy_policy():
 def terms():
     return render_template('legal/terms.html')
 
-@main.route('/cookie-policy')
+@main.route('/cookies')
 def cookie_policy():
     return render_template('legal/cookie_policy.html')
 
-@main.route('/support')
-def support():
-    """Support page with Ko-Fi integration."""
-    return render_template('support.html')
+# Guide routes
+@main.route('/parent-guide')
+def parent_guide():
+    return render_template('guides/parent_guide.html')
+
+@main.route('/child-guide')
+def child_guide():
+    return render_template('guides/child_guide.html')

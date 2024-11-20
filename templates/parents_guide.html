@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+
+{% block title %}Parent's Guide - Wishlistly{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}">Home</a></li>
+            <li class="breadcrumb-item active">Parent's Guide</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h1 class="display-4 mb-4">Parent's Guide to Wishlistly</h1>
+                    
+                    <section class="mb-5">
+                        <h2 class="h4 text-primary mb-3">Welcome to Wishlistly!</h2>
+                        <p class="lead">
+                            We're here to help you create and manage wishlists for your children in a safe and fun way.
+                            This guide will walk you through everything you need to know.
+                        </p>
+                    </section>
+
+                    <section class="mb-5">
+                        <h3 class="h5 mb-3">Getting Started</h3>
+                        <div class="card bg-light mb-3">
+                            <div class="card-body">
+                                <ol class="mb-0">
+                                    <li class="mb-2">Create an account to manage your children's wishlists</li>
+                                    <li class="mb-2">Add your child's information and preferences</li>
+                                    <li class="mb-2">Start creating wishlists for different occasions</li>
+                                    <li>Share wishlists with family and friends</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="mb-5">
+                        <h3 class="h5 mb-3">Safety & Privacy Features</h3>
+                        <ul class="list-unstyled">
+                            <li class="mb-3">
+                                <i class="fas fa-shield-alt text-success me-2"></i>
+                                Private sharing options - only people you choose can see your wishlists
+                            </li>
+                            <li class="mb-3">
+                                <i class="fas fa-user-shield text-success me-2"></i>
+                                No personal information is publicly displayed
+                            </li>
+                            <li class="mb-3">
+                                <i class="fas fa-lock text-success me-2"></i>
+                                Secure gift purchase tracking
+                            </li>
+                        </ul>
+                    </section>
+
+                    <section class="mb-5">
+                        <h3 class="h5 mb-3">Managing Wishlists</h3>
+                        <div class="accordion" id="managingWishlists">
+                            <div class="accordion-item">
+                                <h4 class="accordion-header">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#creatingLists">
+                                        Creating Wishlists
+                                    </button>
+                                </h4>
+                                <div id="creatingLists" class="accordion-collapse collapse show" data-bs-parent="#managingWishlists">
+                                    <div class="accordion-body">
+                                        <p>Creating a wishlist is easy:</p>
+                                        <ol>
+                                            <li>Click "Create New Wishlist"</li>
+                                            <li>Choose an occasion (birthday, holiday, etc.)</li>
+                                            <li>Add items from our catalog or custom items</li>
+                                            <li>Set privacy preferences</li>
+                                            <li>Share with family and friends</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <h4 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sharingLists">
+                                        Sharing Wishlists
+                                    </button>
+                                </h4>
+                                <div id="sharingLists" class="accordion-collapse collapse" data-bs-parent="#managingWishlists">
+                                    <div class="accordion-body">
+                                        <p>You can share wishlists in several ways:</p>
+                                        <ul>
+                                            <li>Direct link sharing</li>
+                                            <li>Email invitations</li>
+                                            <li>Family group sharing</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <h4 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#trackingGifts">
+                                        Gift Tracking
+                                    </button>
+                                </h4>
+                                <div id="trackingGifts" class="accordion-collapse collapse" data-bs-parent="#managingWishlists">
+                                    <div class="accordion-body">
+                                        <p>Keep track of gifts while maintaining surprises:</p>
+                                        <ul>
+                                            <li>See which items have been purchased (without your child knowing)</li>
+                                            <li>Prevent duplicate gifts</li>
+                                            <li>Thank-you note tracking</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="mb-5">
+                        <h3 class="h5 mb-3">Tips for Success</h3>
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item bg-transparent">Keep wishlists updated throughout the year</li>
+                                    <li class="list-group-item bg-transparent">Include items at various price points</li>
+                                    <li class="list-group-item bg-transparent">Add notes or preferences for each item</li>
+                                    <li class="list-group-item bg-transparent">Review lists with your child regularly</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h3 class="h5 mb-3">Need Help?</h3>
+                        <p>Our support team is here to help! Contact us at <a href="mailto:support@wishlistly.gift">support@wishlistly.gift</a></p>
+                        <div class="d-grid gap-2 d-sm-flex justify-content-sm-start mt-4">
+                            <a href="{{ url_for('main.help') }}" class="btn btn-primary me-sm-3">
+                                <i class="fas fa-question-circle me-2"></i>Visit Help Center
+                            </a>
+                            <a href="{{ url_for('main.create_wishlist') }}" class="btn btn-success">
+                                <i class="fas fa-plus-circle me-2"></i>Create Your First Wishlist
+                            </a>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

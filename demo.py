@@ -3,11 +3,27 @@ from datetime import datetime
 
 class DemoWishlist(dict):
     """Demo wishlist class that ensures items is always a list."""
+    def __init__(self, data):
+        super().__init__(data)
+        self.id = data.get('id')
+        self.title = data.get('title')
+        self.description = data.get('description')
+        self.occasion = data.get('occasion')
+        self.theme = data.get('theme')
+        self.created_at = data.get('created_at')
+        self.items = data.get('items', [])
+
     def __getitem__(self, key):
         value = super().__getitem__(key)
         if key == 'items':
             return value if isinstance(value, list) else []
         return value
+
+    def get(self, key, default=None):
+        try:
+            return self[key]
+        except KeyError:
+            return default
 
 def get_demo_wishlists():
     """Return the demo wishlists data."""
@@ -25,87 +41,69 @@ def get_demo_wishlists():
                     "name": "Unicorn Dream Plushie",
                     "description": "Super soft and sparkly unicorn plush toy with rainbow mane",
                     "price": 24.99,
-                    "priority": "HIGH",
+                    "priority": "Must Have",
                     "image_url": "https://picsum.photos/400/300",
-                    "url": "https://example.com/unicorn-plush"
+                    "url": "https://example.com/unicorn-plush",
+                    "purchased": False,
+                    "purchased_by": None
                 },
                 {
                     "id": "demo-item-2",
                     "name": "Magic Art Set",
                     "description": "Complete art set with colored pencils, markers, and special glitter pens",
                     "price": 34.99,
-                    "priority": "HIGH",
+                    "priority": "Would Love",
                     "image_url": "https://picsum.photos/400/301",
-                    "url": "https://example.com/art-set"
+                    "url": "https://example.com/art-set",
+                    "purchased": True,
+                    "purchased_by": "Grandma"
                 },
                 {
                     "id": "demo-item-3",
                     "name": "Science Experiment Kit",
                     "description": "Educational kit with 50+ fun experiments",
                     "price": 45.99,
-                    "priority": "MEDIUM",
+                    "priority": "Nice to Have",
                     "image_url": "https://picsum.photos/400/302",
-                    "url": "https://example.com/science-kit"
+                    "url": "https://example.com/science-kit",
+                    "purchased": False,
+                    "purchased_by": None
                 }
             ]
         },
         "christmas": {
             "id": "demo-christmas",
-            "title": "Family Christmas Wishlist 2024",
-            "description": "Our cozy Christmas wishes! ",
+            "title": "Holiday Wishlist 2024",
+            "description": "My Christmas wishes for this year!",
             "occasion": "christmas",
-            "theme": "christmas_winter_wonderland",
+            "theme": "winter_wonderland",
             "created_at": datetime.now(),
             "items": [
                 {
                     "id": "demo-item-4",
-                    "name": "Board Game Collection",
-                    "description": "Set of 3 classic family board games",
-                    "price": 59.99,
-                    "priority": "HIGH",
+                    "name": "Robot Building Kit",
+                    "description": "Build and program your own robot!",
+                    "price": 79.99,
+                    "priority": "Must Have",
                     "image_url": "https://picsum.photos/400/303",
-                    "url": "https://example.com/board-games"
+                    "url": "https://example.com/robot-kit",
+                    "purchased": False,
+                    "purchased_by": None
                 },
                 {
                     "id": "demo-item-5",
-                    "name": "Hot Chocolate Maker",
-                    "description": "Deluxe hot chocolate machine with frother",
-                    "price": 79.99,
-                    "priority": "MEDIUM",
+                    "name": "Cozy Reading Nook Tent",
+                    "description": "Perfect for reading adventures",
+                    "price": 49.99,
+                    "priority": "Would Love",
                     "image_url": "https://picsum.photos/400/304",
-                    "url": "https://example.com/hot-chocolate"
-                }
-            ]
-        },
-        "graduation": {
-            "id": "demo-graduation",
-            "title": "Alex's Graduation Wishlist",
-            "description": "Celebrating my college graduation! ",
-            "occasion": "graduation",
-            "theme": "graduation_modern",
-            "created_at": datetime.now(),
-            "items": [
-                {
-                    "id": "demo-item-6",
-                    "name": "Professional Laptop",
-                    "description": "High-performance laptop for work and creativity",
-                    "price": 999.99,
-                    "priority": "HIGH",
-                    "image_url": "https://picsum.photos/400/305",
-                    "url": "https://example.com/laptop"
-                },
-                {
-                    "id": "demo-item-7",
-                    "name": "Camera Kit",
-                    "description": "Digital camera with accessories for photography",
-                    "price": 649.99,
-                    "priority": "MEDIUM",
-                    "image_url": "https://picsum.photos/400/306",
-                    "url": "https://example.com/camera"
+                    "url": "https://example.com/reading-tent",
+                    "purchased": True,
+                    "purchased_by": "Uncle Bob"
                 }
             ]
         }
     }
     
-    # Convert each wishlist to a DemoWishlist instance
+    # Convert each wishlist to a DemoWishlist object
     return {k: DemoWishlist(v) for k, v in data.items()}

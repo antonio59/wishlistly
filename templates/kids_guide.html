@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+
+{% block title %}Kid's Guide - Wishlistly{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}">Home</a></li>
+            <li class="breadcrumb-item active">Kid's Guide</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h1 class="display-4 mb-4">Kid's Guide to Wishlistly</h1>
+                    
+                    <section class="mb-5">
+                        <h2 class="h4 text-primary mb-3">Welcome to Your Wishlist Adventure! 🎉</h2>
+                        <p class="lead">
+                            Ready to create the perfect wishlist? We'll show you how to make your very own
+                            list of awesome gifts for any special occasion!
+                        </p>
+                    </section>
+
+                    <section class="mb-5">
+                        <h3 class="h5 mb-3">Getting Started is Easy!</h3>
+                        <div class="card bg-light mb-3">
+                            <div class="card-body">
+                                <ol class="mb-0">
+                                    <li class="mb-2">Pick a special occasion (like your birthday or holidays)</li>
+                                    <li class="mb-2">Add cool things you'd love to get</li>
+                                    <li class="mb-2">Make your list look awesome with fun themes</li>
+                                    <li>Share it with your family and friends!</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="mb-5">
+                        <h3 class="h5 mb-3">Fun Features You'll Love!</h3>
+                        <div class="row g-4">
+                            <div class="col-sm-6">
+                                <div class="card h-100 border-primary">
+                                    <div class="card-body">
+                                        <h4 class="h6 card-title">
+                                            <i class="fas fa-magic text-primary me-2"></i>Cool Themes
+                                        </h4>
+                                        <p class="card-text">Make your wishlist sparkle with awesome themes!</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="card h-100 border-success">
+                                    <div class="card-body">
+                                        <h4 class="h6 card-title">
+                                            <i class="fas fa-star text-success me-2"></i>Special Effects
+                                        </h4>
+                                        <p class="card-text">Add fun animations and decorations!</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="mb-5">
+                        <h3 class="h5 mb-3">Making Your Perfect Wishlist</h3>
+                        <div class="accordion" id="wishlistTips">
+                            <div class="accordion-item">
+                                <h4 class="accordion-header">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#addingItems">
+                                        Adding Items 🎁
+                                    </button>
+                                </h4>
+                                <div id="addingItems" class="accordion-collapse collapse show" data-bs-parent="#wishlistTips">
+                                    <div class="accordion-body">
+                                        <ul class="list-unstyled">
+                                            <li class="mb-2">✨ Search for cool gifts in our catalog</li>
+                                            <li class="mb-2">✨ Add pictures and descriptions</li>
+                                            <li>✨ Choose how much you want each item</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <h4 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#organizingList">
+                                        Organizing Your List 📝
+                                    </button>
+                                </h4>
+                                <div id="organizingList" class="accordion-collapse collapse" data-bs-parent="#wishlistTips">
+                                    <div class="accordion-body">
+                                        <ul class="list-unstyled">
+                                            <li class="mb-2">🌟 Put your favorite items at the top</li>
+                                            <li class="mb-2">🌟 Group similar items together</li>
+                                            <li>🌟 Add notes about colors or sizes you like</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <h4 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sharingTips">
+                                        Sharing Your List 💫
+                                    </button>
+                                </h4>
+                                <div id="sharingTips" class="accordion-collapse collapse" data-bs-parent="#wishlistTips">
+                                    <div class="accordion-body">
+                                        <ul class="list-unstyled">
+                                            <li class="mb-2">🎈 Share with family and friends</li>
+                                            <li class="mb-2">🎈 Keep some surprises for special days</li>
+                                            <li>🎈 Thank people for their gifts</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="mb-5">
+                        <h3 class="h5 mb-3">Fun Tips!</h3>
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item bg-transparent">
+                                        <i class="fas fa-heart text-danger me-2"></i>Add things you really love
+                                    </li>
+                                    <li class="list-group-item bg-transparent">
+                                        <i class="fas fa-paint-brush text-success me-2"></i>Make it colorful and fun
+                                    </li>
+                                    <li class="list-group-item bg-transparent">
+                                        <i class="fas fa-clock text-primary me-2"></i>Update your list regularly
+                                    </li>
+                                    <li class="list-group-item bg-transparent">
+                                        <i class="fas fa-smile text-warning me-2"></i>Have fun creating your wishlist!
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h3 class="h5 mb-3">Need Help?</h3>
+                        <p>Ask a grown-up to help you or contact our friendly support team!</p>
+                        <div class="d-grid gap-2 d-sm-flex justify-content-sm-start mt-4">
+                            <a href="{{ url_for('main.help') }}" class="btn btn-primary me-sm-3">
+                                <i class="fas fa-question-circle me-2"></i>Get Help
+                            </a>
+                            <a href="{{ url_for('main.create_wishlist') }}" class="btn btn-success">
+                                <i class="fas fa-plus-circle me-2"></i>Start Your Wishlist
+                            </a>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

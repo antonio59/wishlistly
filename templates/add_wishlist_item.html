@@ -4,30 +4,31 @@
 
 {% block content %}
 <div class="container mt-4">
-    <h2>Add Item to {{ wishlist.title }}</h2>
+    <h2>Add Item to {{ wishlist.name }}</h2>
     <form method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+        {{ form.csrf_token }}
         <div class="mb-3">
-            <label for="name" class="form-label">Item Name *</label>
-            <input type="text" class="form-control" id="name" name="name" required
-                   data-bs-toggle="tooltip" data-bs-placement="right" 
-                   title="Enter the name of the item you want">
+            {{ form.name.label(class="form-label") }}
+            {{ form.name(class="form-control", required=true,
+                        **{"data-bs-toggle": "tooltip", "data-bs-placement": "right",
+                           "title": "Enter the name of the item you want"}) }}
             <div class="invalid-feedback">
                 Please provide an item name.
             </div>
         </div>
         
         <div class="mb-3">
-            <label for="description" class="form-label">Description</label>
-            <textarea class="form-control" id="description" name="description" rows="3"
-                      data-bs-toggle="tooltip" data-bs-placement="right" 
-                      title="Add details about the item, such as color, size, or any specific preferences"></textarea>
+            {{ form.description.label(class="form-label") }}
+            {{ form.description(class="form-control", rows="3",
+                              **{"data-bs-toggle": "tooltip", "data-bs-placement": "right",
+                                 "title": "Add details about the item, such as color, size, or any specific preferences"}) }}
         </div>
         
         <div class="mb-3">
-            <label for="url" class="form-label">Link (Optional)</label>
-            <input type="url" class="form-control" id="url" name="url" placeholder="https://example.com/item"
-                   data-bs-toggle="tooltip" data-bs-placement="right" 
-                   title="Add a link to where this item can be found online">
+            {{ form.url.label(class="form-label") }}
+            {{ form.url(class="form-control", placeholder="https://example.com/item",
+                       **{"data-bs-toggle": "tooltip", "data-bs-placement": "right",
+                          "title": "Add a link to where this item can be found online"}) }}
         </div>
         
         <div class="mb-3">
@@ -47,29 +48,32 @@
         </div>
         
         <div class="mb-3">
-            <label for="priority" class="form-label">Priority</label>
-            <select class="form-select" id="priority" name="priority"
-                    data-bs-toggle="tooltip" data-bs-placement="right" 
-                    title="HIGH: Must have! MEDIUM: Would really like. LOW: Nice to have.">
-                <option value="LOW">Low Priority</option>
-                <option value="MEDIUM" selected>Medium Priority</option>
-                <option value="HIGH">High Priority</option>
-            </select>
+            {{ form.priority.label(class="form-label") }}
+            {{ form.priority(class="form-select",
+                           **{"data-bs-toggle": "tooltip", "data-bs-placement": "right",
+                              "title": "Choose how important this item is to you"}) }}
             <div class="form-text">
                 <i class="fas fa-info-circle"></i> Priority levels:
                 <ul class="mt-1">
-                    <li><strong>High Priority:</strong> Must have! These are the items you want the most.</li>
-                    <li><strong>Medium Priority:</strong> Would really like to have these items.</li>
-                    <li><strong>Low Priority:</strong> Nice to have, but not essential.</li>
+                    <li><strong>Must Have:</strong> These are the items you want the most!</li>
+                    <li><strong>Would Like:</strong> Would really like to have these items.</li>
+                    <li><strong>Nice to Have:</strong> Not essential, but would be nice.</li>
                 </ul>
             </div>
         </div>
         
-        <button type="submit" class="btn btn-primary">Add Item</button>
-        <a href="{{ url_for('manage_wishlist', wishlist_id=wishlist.id) }}" class="btn btn-secondary">Cancel</a>
+        <button type="submit" class="btn btn-primary">
+            <i class="fas fa-plus-circle me-2"></i>Add Item
+        </button>
+        <a href="{{ url_for('view_wishlist', wishlist_id=wishlist.id) }}" class="btn btn-outline-secondary">
+            <i class="fas fa-times me-2"></i>Cancel
+        </a>
     </form>
 </div>
 
+{% endblock %}
+
+{% block extra_js %}
 <script>
 // Initialize all tooltips
 var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
@@ -100,15 +104,14 @@ document.getElementById('images').addEventListener('change', function(e) {
     const maxSize = 16 * 1024 * 1024; // 16MB in bytes
     
     if (this.files.length > maxFiles) {
-        alert(`You can only upload up to ${maxFiles} images`);
+        alert(`Please select a maximum of ${maxFiles} images.`);
         this.value = '';
         return;
     }
     
-    // Check file sizes
     for (let i = 0; i < this.files.length; i++) {
         if (this.files[i].size > maxSize) {
-            alert(`File "${this.files[i].name}" is too large. Maximum size is 16MB.\n\nTry using one of the recommended image compression tools below the upload field!`);
+            alert(`File "${this.files[i].name}" is too large. Maximum file size is 16MB.`);
             this.value = '';
             return;
         }
