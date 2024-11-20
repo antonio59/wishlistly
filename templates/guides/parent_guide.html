@@ -112,10 +112,10 @@
                         <h2 class="h4"><i class="fas fa-question-circle text-primary me-2"></i>Need Help?</h2>
                         <p>If you have any questions or need assistance, we're here to help:</p>
                         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                            <a href="{{ url_for('feedback.feedback_form', type='GENERAL') }}" class="btn btn-primary">
+                            <a href="{{ url_for('main.feedback', type='GENERAL') }}" class="btn btn-primary">
                                 <i class="fas fa-headset me-2"></i>Contact Support
                             </a>
-                            <a href="{{ url_for('feedback.feedback_form', type='BUG') }}" class="btn btn-outline-secondary">
+                            <a href="{{ url_for('main.feedback', type='BUG') }}" class="btn btn-outline-secondary">
                                 <i class="fas fa-bug me-2"></i>Report an Issue
                             </a>
                         </div>

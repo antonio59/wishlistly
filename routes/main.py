@@ -4,6 +4,7 @@ from models.user import User
 from models.wishlist import Wishlist
 from models.activity import Activity
 from models.db import db
+from models.feedback import FeedbackType
 from datetime import datetime
 
 main = Blueprint('main', __name__)
@@ -34,12 +35,13 @@ def kids_safety():
 
 @main.route('/feedback', methods=['GET', 'POST'])
 def feedback():
+    feedback_type = request.args.get('type', 'GENERAL')
     if request.method == 'POST':
         feedback_text = request.form.get('feedback')
         if feedback_text:
             flash('Thank you for your feedback!', 'success')
             return redirect(url_for('main.index'))
-    return render_template('feedback_form.html')
+    return render_template('feedback_form.html', feedback_type=feedback_type, feedback_types=FeedbackType)
 
 @main.route('/faq')
 def faq():
