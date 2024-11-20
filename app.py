@@ -28,7 +28,7 @@ app = Flask(__name__)
 
 # Basic configuration
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'your-dev-secret-key-please-change-in-production')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/antoniosmith/CascadeProjects/kidswishlist/instance/kidswishlist.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/antoniosmith/CascadeProjects/wishlistly/instance/wishlistly.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True  # Enable SQL logging
 
