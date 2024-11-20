@@ -13,8 +13,8 @@ main = Blueprint('main', __name__)
 def index():
     if current_user.is_authenticated:
         if current_user.is_parent:
-            return redirect(url_for('parent_dashboard'))
-        return redirect(url_for('dashboard'))
+            return redirect(url_for('main.parent_dashboard'))
+        return redirect(url_for('main.dashboard'))
     return render_template('index.html')
 
 @main.route('/about')
@@ -50,6 +50,35 @@ def faq():
 @main.route('/help')
 def help():
     return render_template('help.html')
+
+# Dashboard routes
+@main.route('/dashboard')
+@login_required
+def dashboard():
+    if current_user.is_parent:
+        return redirect(url_for('main.parent_dashboard'))
+    
+    wishlists = Wishlist.query.filter_by(user_id=current_user.id).all()
+    activities = Activity.query.filter_by(user_id=current_user.id).order_by(Activity.created_at.desc()).limit(10).all()
+    
+    return render_template('dashboard.html', wishlists=wishlists, activities=activities)
+
+@main.route('/parent-dashboard')
+@login_required
+def parent_dashboard():
+    if not current_user.is_parent:
+        return redirect(url_for('main.dashboard'))
+    
+    children = User.query.filter_by(parent_id=current_user.id).all()
+    child_activities = []
+    for child in children:
+        activities = Activity.query.filter_by(user_id=child.id).order_by(Activity.created_at.desc()).limit(5).all()
+        child_activities.extend(activities)
+    
+    child_activities.sort(key=lambda x: x.created_at, reverse=True)
+    child_activities = child_activities[:10]
+    
+    return render_template('parent_dashboard.html', children=children, activities=child_activities)
 
 # Legal routes
 @main.route('/privacy')

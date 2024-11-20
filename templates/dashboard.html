@@ -11,7 +11,7 @@
     
     {% if current_user.is_parent and 'parent_id' not in session %}
         <div class="text-center mb-4">
-            <a href="{{ url_for('parent_dashboard') }}" class="btn btn-primary">
+            <a href="{{ url_for('main.parent_dashboard') }}" class="btn btn-primary">
                 <i class="fas fa-columns me-2"></i>
                 Go to Parent Dashboard
             </a>
@@ -31,7 +31,7 @@
                         </h3>
                         <p class="wishlist-item-description">{{ wishlist.description }}</p>
                         <div class="d-grid">
-                            <a href="{{ url_for('wishlist.view_wishlist', wishlist_id=wishlist.id) }}" class="btn btn-primary">
+                            <a href="{{ url_for('manage_wishlist', wishlist_id=wishlist.id) }}" class="btn btn-primary">
                                 <i class="fas fa-eye me-2"></i>
                                 View Wishlist
                             </a>

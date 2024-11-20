@@ -139,7 +139,7 @@
                     <label class="form-label">Wishlist Link</label>
                     <div class="input-group">
                         <input type="text" class="form-control" id="wishlistUrl" readonly
-                               value="{{ url_for('view_wishlist', wishlist_id=wishlist.id, _external=True) }}">
+                               value="{{ url_for('manage_wishlist', wishlist_id=wishlist.id, _external=True) }}">
                         <button class="btn btn-outline-primary" onclick="copyWishlistUrl()">
                             <i class="fas fa-copy"></i>
                         </button>

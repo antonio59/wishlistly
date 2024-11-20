@@ -8,7 +8,7 @@
         <div class="col-12">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url_for('main.dashboard') }}">Dashboard</a></li>
                     <li class="breadcrumb-item active">{{ child.username }}'s Details</li>
                 </ol>
             </nav>
@@ -123,7 +123,7 @@
                                                    class="btn btn-sm btn-outline-primary">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
-                                                <a href="{{ url_for('edit_wishlist', wishlist_id=wishlist.id) }}" 
+                                                <a href="{{ url_for('manage_wishlist', wishlist_id=wishlist.id) }}" 
                                                    class="btn btn-sm btn-outline-secondary">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
