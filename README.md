@@ -1,4 +1,4 @@
-# Kid's Wishlist Creator 🎁
+# Wishlistly 🎁
 
 A child-friendly web application that lets kids create and personalize their wishlists for special occasions like birthdays, Christmas, and other events!
 
