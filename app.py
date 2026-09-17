@@ -19,6 +19,7 @@ from routes.main import main
 from routes.demo import demo
 from routes.auth import auth
 from routes.wishlist import wishlist
+from routes.parent import parent
 from utils.email import mail
 from utils.filters import timeago
 
@@ -27,10 +28,10 @@ load_dotenv()
 app = Flask(__name__)
 
 # Basic configuration
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'your-dev-secret-key-please-change-in-production')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/antoniosmith/CascadeProjects/wishlistly/instance/wishlistly.db'
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY') or secrets.token_hex(32)
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///wishlistly.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_ECHO'] = True  # Enable SQL logging
+app.config['SQLALCHEMY_ECHO'] = os.getenv('SQLALCHEMY_ECHO', '').lower() == 'true'
 
 # Email configuration
 app.config['MAIL_SERVER'] = os.getenv('MAIL_SERVER', 'smtp.gmail.com')
@@ -75,6 +76,7 @@ app.register_blueprint(main)
 app.register_blueprint(demo)
 app.register_blueprint(auth)
 app.register_blueprint(wishlist, url_prefix='/wishlist')
+app.register_blueprint(parent, url_prefix='/parent')
 
 migrate = Migrate(app, db)
 
@@ -879,77 +881,8 @@ def parents_guide():
 def cookie_policy():
     return render_template('policies/cookie_policy.html')
 
-@app.route('/admin/flush_data', methods=['GET'])
-def flush_data():
-    try:
-        app.logger.info("Starting database flush...")
-        
-        # Step 1: Close all database connections
-        try:
-            db.session.remove()
-            db.session.close_all()
-            db.engine.dispose()
-            app.logger.info("Database connections closed successfully")
-        except Exception as e:
-            app.logger.error(f"Error closing database connections: {str(e)}")
-            raise
-        
-        # Step 2: Remove database files
-        db_files = [
-            '/Users/antoniosmith/CascadeProjects/kidswishlist/instance/kidswishlist.db',
-            '/Users/antoniosmith/CascadeProjects/kidswishlist/instance/wishlist.db',
-            '/Users/antoniosmith/CascadeProjects/kidswishlist/wishlist.db'
-        ]
-        
-        for db_path in db_files:
-            try:
-                if os.path.exists(db_path):
-                    os.remove(db_path)
-                    app.logger.info(f"Successfully removed database file: {db_path}")
-            except Exception as e:
-                app.logger.error(f"Error removing database file {db_path}: {str(e)}")
-                # Continue even if one file fails to delete
-        
-        # Step 3: Clear Flask session
-        try:
-            session.clear()
-            app.logger.info("Flask session cleared")
-        except Exception as e:
-            app.logger.error(f"Error clearing Flask session: {str(e)}")
-            raise
-        
-        # Step 4: Create instance directory if it doesn't exist
-        try:
-            instance_path = '/Users/antoniosmith/CascadeProjects/kidswishlist/instance'
-            if not os.path.exists(instance_path):
-                os.makedirs(instance_path)
-                app.logger.info(f"Created instance directory: {instance_path}")
-        except Exception as e:
-            app.logger.error(f"Error creating instance directory: {str(e)}")
-            raise
-        
-        # Step 5: Initialize new database
-        try:
-            with app.app_context():
-                db.create_all()
-                db.session.commit()
-                app.logger.info("Database tables created successfully")
-        except Exception as e:
-            app.logger.error(f"Error creating database tables: {str(e)}")
-            raise
-        
-        app.logger.info("Database flush completed successfully")
-        flash('All data has been flushed successfully!', 'success')
-        
-    except Exception as e:
-        app.logger.error(f"Critical error during database flush: {str(e)}")
-        flash('Error flushing data. Please check the logs.', 'danger')
-        db.session.rollback()
-    
-    return redirect(url_for('index'))
-
 if __name__ == '__main__':
     print("Starting server on http://localhost:3000")
     with app.app_context():
         db.create_all()
-    app.run(port=3000, debug=True)
+    app.run(port=3000, debug=os.getenv('FLASK_DEBUG') == '1')

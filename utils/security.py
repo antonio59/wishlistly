@@ -31,7 +31,7 @@ def verify_reset_token(token):
             algorithms=['HS256']
         )
         return data['reset_password']
-    except:
+    except (jwt.PyJWTError, KeyError):
         return None
 
 def rate_limit(limit=5, window=60):

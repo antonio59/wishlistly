@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block styles %}
+{{ super() }}
+<style>
+    .parent-dashboard {
+        padding: 2rem 0;
+    }
+    .child-card {
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s;
+    }
+    .child-card:hover {
+        transform: translateY(-5px);
+    }
+    .activity-timeline {
+        position: relative;
+        padding-left: 2rem;
+    }
+    .activity-timeline::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: #e9ecef;
+    }
+    .activity-item {
+        position: relative;
+        margin-bottom: 1.5rem;
+    }
+    .activity-item::before {
+        content: '';
+        position: absolute;
+        left: -2rem;
+        top: 0.5rem;
+        width: 1rem;
+        height: 1rem;
+        border-radius: 50%;
+        background: #007bff;
+    }
+    .notification-badge {
+        position: relative;
+    }
+    .notification-badge[data-count]:after {
+        content: attr(data-count);
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        font-size: 0.75rem;
+        background: #dc3545;
+        color: white;
+        width: 18px;
+        height: 18px;
+        text-align: center;
+        line-height: 18px;
+        border-radius: 50%;
+        border: 2px solid white;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="parent-dashboard">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-12">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
+                    <div class="container-fluid">
+                        <span class="navbar-brand">Parent Dashboard</span>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#parentNav">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="parentNav">
+                            <ul class="navbar-nav ms-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url_for('parent.dashboard') }}">
+                                        <i class="fas fa-home"></i> Overview
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link notification-badge" href="{{ url_for('parent.notifications') }}"
+                                       {% if unread_notifications %}data-count="{{ unread_notifications }}"{% endif %}>
+                                        <i class="fas fa-bell"></i> Notifications
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url_for('auth.register_child') }}">
+                                        <i class="fas fa-user-plus"></i> Add Child
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        
+        {% block dashboard_content %}{% endblock %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+    // Enable Bootstrap tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+</script>
+{% endblock %}

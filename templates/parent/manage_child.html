@@ -1,0 +1,113 @@
+{% extends "parent/base.html" %}
+
+{% block dashboard_content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Manage Child Account: {{ child.username }}</h5>
+            </div>
+            <div class="card-body">
+                <form action="{{ url_for('parent.update_child_settings', child_id=child.id) }}" method="POST">
+                    <!-- Account Information -->
+                    <div class="mb-4">
+                        <h6 class="card-subtitle mb-3">Account Information</h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Username</label>
+                                    <input type="text" class="form-control" value="{{ child.username }}" disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Age</label>
+                                    <input type="text" class="form-control" value="{{ child.age }}" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Account Settings -->
+                    <div class="mb-4">
+                        <h6 class="card-subtitle mb-3">Account Settings</h6>
+                        <div class="form-check mb-3">
+                            <input type="checkbox" class="form-check-input" id="requires_approval"
+                                   name="requires_approval" {% if child.requires_parent_approval %}checked{% endif %}
+                                   {% if child.age < 13 %}disabled{% endif %}>
+                            <label class="form-check-label" for="requires_approval">
+                                Requires Parent Approval
+                                {% if child.age < 13 %}
+                                <small class="text-muted">(Required for children under 13)</small>
+                                {% endif %}
+                            </label>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input type="checkbox" class="form-check-input" id="can_manage_account"
+                                   name="can_manage_account" {% if child.can_manage_account %}checked{% endif %}
+                                   {% if child.age < 13 %}disabled{% endif %}>
+                            <label class="form-check-label" for="can_manage_account">
+                                Can Manage Account
+                                {% if child.age < 13 %}
+                                <small class="text-muted">(Not available for children under 13)</small>
+                                {% endif %}
+                            </label>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input type="checkbox" class="form-check-input" id="sharing_enabled"
+                                   name="sharing_enabled" {% if child.sharing_enabled %}checked{% endif %}>
+                            <label class="form-check-label" for="sharing_enabled">
+                                Sharing Enabled
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Notification Settings -->
+                    <div class="mb-4">
+                        <h6 class="card-subtitle mb-3">Notification Settings</h6>
+                        <div class="form-check mb-3">
+                            <input type="checkbox" class="form-check-input" id="notifications_enabled"
+                                   name="notifications_enabled" {% if child.notifications_enabled %}checked{% endif %}>
+                            <label class="form-check-label" for="notifications_enabled">
+                                Enable Notifications
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Activity Overview -->
+                    <div class="mb-4">
+                        <h6 class="card-subtitle mb-3">Activity Overview</h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Last Active</label>
+                                    <input type="text" class="form-control" 
+                                           value="{{ child.last_activity.strftime('%Y-%m-%d %H:%M') if child.last_activity else 'Never' }}" 
+                                           disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Account Status</label>
+                                    <input type="text" class="form-control" 
+                                           value="{{ 'Active' if child.is_active else 'Inactive' }}"
+                                           disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ url_for('parent.dashboard') }}" class="btn btn-outline-secondary">
+                            Back to Dashboard
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            Save Changes
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

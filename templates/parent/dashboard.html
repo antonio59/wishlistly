@@ -1,0 +1,121 @@
+{% extends "parent/base.html" %}
+
+{% block dashboard_content %}
+<div class="row">
+    <!-- Children Overview -->
+    <div class="col-lg-8">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Children Accounts</h5>
+                <a href="{{ url_for('auth.register_child') }}" class="btn btn-primary btn-sm">
+                    <i class="fas fa-plus"></i> Add Child
+                </a>
+            </div>
+            <div class="card-body">
+                {% if children %}
+                <div class="row">
+                    {% for child in children %}
+                    <div class="col-md-6 mb-4">
+                        <div class="card child-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h6 class="card-title mb-0">{{ child.username }}</h6>
+                                    <span class="badge {% if child.is_active %}bg-success{% else %}bg-secondary{% endif %}">
+                                        {{ 'Active' if child.is_active else 'Inactive' }}
+                                    </span>
+                                </div>
+                                <div class="mb-2">
+                                    <small class="text-muted">Age: {{ child.age }}</small>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" disabled
+                                               {% if child.requires_parent_approval %}checked{% endif %}>
+                                        <label class="form-check-label">Requires Approval</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" disabled
+                                               {% if child.can_manage_account %}checked{% endif %}>
+                                        <label class="form-check-label">Can Manage Account</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" disabled
+                                               {% if child.sharing_enabled %}checked{% endif %}>
+                                        <label class="form-check-label">Sharing Enabled</label>
+                                    </div>
+                                </div>
+                                <div class="text-end">
+                                    <a href="{{ url_for('parent.manage_child', child_id=child.id) }}" 
+                                       class="btn btn-outline-primary btn-sm">
+                                        Manage Settings
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="text-center py-4">
+                    <p class="text-muted mb-3">No child accounts found</p>
+                    <a href="{{ url_for('auth.register_child') }}" class="btn btn-primary">
+                        Add Your First Child
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="col-lg-4">
+        <!-- Pending Requests -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Pending Requests</h5>
+            </div>
+            <div class="card-body">
+                {% if pending_requests %}
+                <div class="list-group list-group-flush">
+                    {% for request in pending_requests %}
+                    <div class="list-group-item">
+                        <h6 class="mb-1">Wishlist Sharing Request</h6>
+                        <p class="mb-1">{{ request.child.username }} wants to share their wishlist</p>
+                        <div class="btn-group btn-group-sm">
+                            <a href="{{ url_for('parent.handle_sharing_request', request_id=request.id, action='approve') }}"
+                               class="btn btn-success">Approve</a>
+                            <a href="{{ url_for('parent.handle_sharing_request', request_id=request.id, action='reject') }}"
+                               class="btn btn-danger">Reject</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="text-muted mb-0">No pending requests</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Recent Activity</h5>
+            </div>
+            <div class="card-body">
+                {% if activities %}
+                <div class="activity-timeline">
+                    {% for activity in activities %}
+                    <div class="activity-item">
+                        <small class="text-muted">{{ activity.updated_at.strftime('%Y-%m-%d %H:%M') }}</small>
+                        <p class="mb-0">{{ activity.user.username }} updated their wishlist</p>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="text-muted mb-0">No recent activity</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
